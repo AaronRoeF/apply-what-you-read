@@ -1,0 +1,38 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install --quiet pytest pillow
+      - name: publish checks (the gate's pattern classes, no personal values)
+        run: bash tests/publish-checks.sh --root .
+      - name: tests (everything that does not need Apple Vision, a live browser, or the claude CLI)
+        run: bash tests/run.sh -m "not macos and not live and not claude"
+      - name: quickstart on the fixture
+        run: bash quickstart.sh
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install --quiet pytest pillow pyobjc-framework-Vision pyobjc-framework-Quartz
+      - name: tests incl. Apple Vision OCR on the fixture pages
+        run: bash tests/run.sh -m "not live and not claude"
+      - name: quickstart with real OCR
+        run: OCR_ENGINE=vision bash quickstart.sh
