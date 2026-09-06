@@ -1,4 +1,4 @@
-# Code of Conduct — reading-graph
+# Code of Conduct — apply-what-you-read
 
 Contact for reports: via https://aaronfulkerson.com
 

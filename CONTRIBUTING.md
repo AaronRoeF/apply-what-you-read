@@ -1,4 +1,4 @@
-# Contributing to reading-graph
+# Contributing to apply-what-you-read
 
 Thanks for your interest. This is a small, opinionated project: one pipeline, one path, no
 service. Contributions are judged against that.

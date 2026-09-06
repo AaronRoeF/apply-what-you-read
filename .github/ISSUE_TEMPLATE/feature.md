@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest a feature for reading-graph
+about: Suggest a feature for apply-what-you-read
 labels: enhancement
 ---
 
