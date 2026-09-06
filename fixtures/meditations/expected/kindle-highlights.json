@@ -1,0 +1,302 @@
+{
+ "crawled_at": "03/01/2026 08:00:00",
+ "source": "fixture",
+ "account_books": 1,
+ "books_with_highlights": 1,
+ "total_annotations": 35,
+ "errors": [],
+ "books": [
+  {
+   "asin": "x01e167f36",
+   "title": "Meditations",
+   "author": "Marcus Aurelius",
+   "n": 35,
+   "pageRange": [
+    100,
+    362
+   ],
+   "annotations": [
+    {
+     "id": "kh:7ab085fce11b26d9",
+     "color": "Yellow",
+     "page": "1",
+     "location": "100",
+     "text": "Remember how long thou hast already put off these things, and how often a certain day and hour as it were, having been set unto thee by the gods, thou hast neglected it.",
+     "note": ""
+    },
+    {
+     "id": "kh:2a0ed2c0be80d7ab",
+     "color": "Yellow",
+     "page": "1",
+     "location": "104",
+     "text": "It is high time for thee to understand the true nature both of the world, whereof thou art a part; and of that Lord and Governor of the world, from whom, as a channel from the spring, thou thyself didst flow",
+     "note": ""
+    },
+    {
+     "id": "kh:6aa63ecdb1bb20a1",
+     "color": "Pink",
+     "page": "1",
+     "location": "109",
+     "text": "there is but a certain limit of time appointed unto thee, which if thou shalt not make use of to calm and allay the many distempers of thy soul, it will pass away and thou with it, and never after return.",
+     "note": "Deadline for the soul, not the calendar."
+    },
+    {
+     "id": "kh:a583b1bb2eeb5c45",
+     "color": "Yellow",
+     "page": "1",
+     "location": "115",
+     "text": "Let it be thy earnest and incessant care as a Roman and a man to perform whatsoever it is that thou art about, with true and unfeigned gravity, natural affection, freedom and justice",
+     "note": ""
+    },
+    {
+     "id": "kh:2a72e292d6170a4d",
+     "color": "Pink",
+     "page": "1",
+     "location": "122",
+     "text": "go about every action as thy last action, free from all vanity, all passionate and wilful aberration from reason, and from all hypocrisy, and self-love",
+     "note": "Morning rule: the first task as if it were the last."
+    },
+    {
+     "id": "kh:934a3fda0f51d125",
+     "color": "Yellow",
+     "page": null,
+     "location": "138",
+     "text": "Every man's happiness depends from himself, but behold thy life is almost at an end, whiles affording thyself no respect, thou dost make thy happiness to consist in the souls, and conceits of other men.",
+     "note": ""
+    },
+    {
+     "id": "kh:347f45685cf934a2",
+     "color": "Yellow",
+     "page": "2",
+     "location": "143",
+     "text": "Why should any of these things that happen externally, so much distract thee? Give thyself leisure to learn some good thing, and cease roving and wandering to and fro.",
+     "note": ""
+    },
+    {
+     "id": "kh:a10f865ad372bf92",
+     "color": "Yellow",
+     "page": "2",
+     "location": "148",
+     "text": "they are idle in their actions, who toil and labour in this life, and have no certain scope to which to direct all their motions, and desires.",
+     "note": ""
+    },
+    {
+     "id": "kh:011a5a4c29ee5114",
+     "color": "Yellow",
+     "page": null,
+     "location": "152",
+     "text": "For not observing the state of another man's soul, scarce was ever any man known to be unhappy.",
+     "note": ""
+    },
+    {
+     "id": "kh:e16615bf8f245102",
+     "color": "Yellow",
+     "page": "2",
+     "location": "154",
+     "text": "Tell whosoever they be that intend not, and guide not by reason and discretion the motions of their own souls, they must of necessity be unhappy.",
+     "note": ""
+    },
+    {
+     "id": "kh:ac7ba4af16e8d89f",
+     "color": "Yellow",
+     "page": "2",
+     "location": "158",
+     "text": "A man must not only consider how daily his life wasteth and decreaseth, but this also, that if he live long, he cannot be certain, whether his understanding shall continue so able and sufficient",
+     "note": ""
+    },
+    {
+     "id": "kh:e31936b2833ae9a8",
+     "color": "Pink",
+     "page": "3",
+     "location": "183",
+     "text": "Thou must hasten therefore; not only because thou art every day nearer unto death than other, but also because that intellective faculty in thee, whereby thou art enabled to know the true nature of things, and to order all thy actions by that knowledge, doth daily waste and decay",
+     "note": ""
+    },
+    {
+     "id": "kh:71c907caaf570ff2",
+     "color": "Blue",
+     "page": "4",
+     "location": "192",
+     "text": "whatsoever it is that naturally doth happen to things natural, hath somewhat in itself that is pleasing and delightful",
+     "note": ""
+    },
+    {
+     "id": "kh:14f8966836703709",
+     "color": "Yellow",
+     "page": "4",
+     "location": "195",
+     "text": "as a great loaf when it is baked, some parts of it cleave as it were, and part asunder, and make the crust of it rugged and unequal, and yet those parts of it, though in some sort it be against the art and intention of baking itself, that they are thus cleft and parted, which should have been and were first made all even and uniform, they become it well nevertheless, and have a certain peculiar property, to stir the appetite.",
+     "note": ""
+    },
+    {
+     "id": "kh:25ee8934bb4cdeeb",
+     "color": "Yellow",
+     "page": null,
+     "location": "206",
+     "text": "So figs are accounted fairest and ripest then, when they begin to shrink, and wither as it were. So ripe olives, when they are next to putrefaction, then are they in their proper beauty.",
+     "note": ""
+    },
+    {
+     "id": "kh:bdb20a1cc5820c94",
+     "color": "Yellow",
+     "page": "4",
+     "location": "217",
+     "text": "if a man shall with a profound mind and apprehension, consider all things in the world, even among all those things which are but mere accessories and natural appendices as it were, there will scarce appear anything unto him, wherein he will not find matter of pleasure and delight.",
+     "note": ""
+    },
+    {
+     "id": "kh:7bf01b558259f454",
+     "color": "Yellow",
+     "page": "5",
+     "location": "227",
+     "text": "So will he be able to perceive the proper ripeness and beauty of old age, whether in man or woman: and whatsoever else it is that is beautiful and alluring in whatsoever is, with chaste and continent eyes he will soon find out and discern.",
+     "note": ""
+    },
+    {
+     "id": "kh:9731caaf1e8427d5",
+     "color": "Yellow",
+     "page": null,
+     "location": "234",
+     "text": "not credible unto every one, but unto them only who are truly and familiarly acquainted, both with nature itself, and all natural things.",
+     "note": ""
+    },
+    {
+     "id": "kh:eecb3f781541189f",
+     "color": "Yellow",
+     "page": "5",
+     "location": "238",
+     "text": "That inward mistress part of man if it be in its own true natural temper, is towards all worldly chances and events ever so disposed and affected, that it will easily turn and apply itself to that which may be, and is within its own power to compass, when that cannot be which at first it intended.",
+     "note": ""
+    },
+    {
+     "id": "kh:2113817a446916a7",
+     "color": "Yellow",
+     "page": "5",
+     "location": "249",
+     "text": "it doth prosecute it with exception and reservation; so that whatsoever it is that falls out contrary to its first intentions, even that afterwards it makes its proper object.",
+     "note": ""
+    },
+    {
+     "id": "kh:d5aac1dea9edaf75",
+     "color": "Yellow",
+     "page": "6",
+     "location": "253",
+     "text": "Even as the fire when it prevails upon those things that are in his way; by which things indeed a little fire would have been quenched, but a great fire doth soon turn to its own nature, and so consume whatsoever comes in his way: yea by those very things it is made greater and greater.",
+     "note": ""
+    },
+    {
+     "id": "kh:06bca945c2c13cfc",
+     "color": "Orange",
+     "page": "6",
+     "location": "261",
+     "text": "Let nothing be done rashly, and at random, but all things according to the most exact and perfect rules of art.",
+     "note": ""
+    },
+    {
+     "id": "kh:7eb93bc6fb9b7646",
+     "color": "Yellow",
+     "page": "6",
+     "location": "263",
+     "text": "They seek for themselves private retiring places, as country villages, the sea-shore, mountains; yea thou thyself art wont to long much after such places.",
+     "note": ""
+    },
+    {
+     "id": "kh:9499b1a28375eed1",
+     "color": "Pink",
+     "page": "6",
+     "location": "269",
+     "text": "At what time soever thou wilt, it is in thy power to retire into thyself, and to be at rest, and free from all businesses.",
+     "note": "The retiring: ten minutes, door shut, before the inbox."
+    },
+    {
+     "id": "kh:5d31861e4026c03f",
+     "color": "Yellow",
+     "page": "6",
+     "location": "272",
+     "text": "A man cannot any whither retire better than to his own soul; he especially who is beforehand provided of such things within, which whensoever he doth withdraw himself to look in, may presently afford unto him perfect ease and tranquillity.",
+     "note": ""
+    },
+    {
+     "id": "kh:4b7eead896b5d351",
+     "color": "Yellow",
+     "page": "6",
+     "location": "278",
+     "text": "By tranquillity I understand a decent orderly disposition and carriage, free from all confusion and tumultuousness.",
+     "note": ""
+    },
+    {
+     "id": "kh:b89bfd0415576db1",
+     "color": "Yellow",
+     "page": null,
+     "location": "283",
+     "text": "Let these precepts be brief and fundamental, which as soon as thou dost call them to mind, may suffice thee to purge thy soul throughly",
+     "note": ""
+    },
+    {
+     "id": "kh:50bb8403314eef21",
+     "color": "Yellow",
+     "page": "7",
+     "location": "294",
+     "text": "all reasonable creatures are made one for another? and that it is part of justice to bear with them? and that it is against their wills that they offend?",
+     "note": ""
+    },
+    {
+     "id": "kh:b97a641d3a8b2e93",
+     "color": "Yellow",
+     "page": "7",
+     "location": "298",
+     "text": "how many already, who once likewise prosecuted their enmities, suspected, hated, and fiercely contended, are now long ago stretched out, and reduced unto ashes?",
+     "note": "Every grudge I hold has this expiry date."
+    },
+    {
+     "id": "kh:b92ac02591062f9e",
+     "color": "Yellow",
+     "page": "7",
+     "location": "302",
+     "text": "It is time for thee to make an end.",
+     "note": ""
+    },
+    {
+     "id": "kh:a857c83b577cac21",
+     "color": "Yellow",
+     "page": "8",
+     "location": "325",
+     "text": "how quickly all things that are, are forgotten, and what an immense chaos of eternity was before, and will follow after all things: and the vanity of praise, and the inconstancy and variableness of human judgments and opinions",
+     "note": ""
+    },
+    {
+     "id": "kh:4c70b37b100aaa28",
+     "color": "Yellow",
+     "page": null,
+     "location": "333",
+     "text": "For the whole earth is but as one point; and of it, this inhabited part of it, is but a very little part; and of this part, how many in number, and what manner of men are they, that will commend thee?",
+     "note": ""
+    },
+    {
+     "id": "kh:6c1eac85a3bf882c",
+     "color": "Yellow",
+     "page": "9",
+     "location": "341",
+     "text": "keep thyself from distraction, and intend not anything vehemently, but be free and consider all things, as a man whose proper object is Virtue, as a man whose true nature is to be kind and sociable, as a citizen, as a mortal creature.",
+     "note": ""
+    },
+    {
+     "id": "kh:e5519ee535ae8a18",
+     "color": "Pink",
+     "page": "9",
+     "location": "351",
+     "text": "the things or objects themselves reach not unto the soul, but stand without still and quiet, and that it is from the opinion only which is within, that all the tumult and all the trouble doth proceed.",
+     "note": "Opinion is the only place the trouble lives."
+    },
+    {
+     "id": "kh:b411bb3f8633b370",
+     "color": "Pink",
+     "page": "9",
+     "location": "362",
+     "text": "This world is mere change, and this life, opinion.",
+     "note": ""
+    }
+   ]
+  }
+ ]
+}

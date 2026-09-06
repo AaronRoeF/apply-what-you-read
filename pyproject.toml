@@ -1,0 +1,22 @@
+[project]
+name = "apply-what-you-read"
+version = "0.1.0"
+description = "Continuous learning from the books you read: annotations in, a vault of book nodes out, one cited lesson at a time."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Aaron Fulkerson" }]
+dependencies = []
+
+[project.optional-dependencies]
+crawl = ["playwright>=1.45"]
+pages-mac = ["pillow>=10.1", "pyobjc-framework-Vision>=10", "pyobjc-framework-Quartz>=10"]
+dev = ["pytest>=8", "pillow>=10.1"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "macos: needs Apple Vision (skipped off macOS)",
+  "live: drives a live, logged-in browser session (never in CI)",
+  "claude: needs the claude CLI on PATH (manual smoke)",
+]

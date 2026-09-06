@@ -1,0 +1,11 @@
+# requirements-mac.txt — the photographed-pages path (Apple Vision OCR via PyObjC) plus what the
+# reference scripts import. Linux/CI needs none of these for the Kindle path.
+pillow>=10.1,<13
+pyobjc-framework-Vision>=10,<12
+pyobjc-framework-Quartz>=10,<12
+# reference/extract_docs.py (ran once; off the quickstart path)
+PyMuPDF>=1.24,<2
+python-docx>=1.1,<2
+python-pptx>=1.0,<2
+# reference/classify.py — the API classification path, never run against the reference corpus
+anthropic>=0.40

@@ -1,0 +1,11 @@
+# Run artifacts and the local venv never enter git.
+.venv/
+out/
+*.jsonl
+ocr_vision
+.env
+.env.*
+*.egg-info/
+__pycache__/
+.DS_Store
+demo-vault/
