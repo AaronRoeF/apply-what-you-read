@@ -13,7 +13,7 @@ labels: bug
 **Plausibility output**
 
 (If a capture stage is involved, paste the sorted per-book count line. A silent zero is a bug
-even when nothing threw — see `docs/02-HIGHLIGHT-EXTRACTION.md`.)
+even when nothing threw — see `docs/02-KINDLE.md`.)
 
 **Environment**
 
