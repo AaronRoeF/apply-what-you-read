@@ -14,8 +14,11 @@ you fork.
 | [03-PHOTOS-AND-NOTES.md](03-PHOTOS-AND-NOTES.md) | you read on paper, or mark with a pen. Local OCR, the catalogue pass, and why photographs are a biased sample. |
 | [04-VAULT.md](04-VAULT.md) | one markdown node per book: the contract, the rules the builder enforces, Obsidian optional. |
 | [05-DISTILL.md](05-DISTILL.md) | the 20% that carries a book, your marks mapped onto it, and the fidelity tag on line one. |
-| 06-PRAXIS.md · 07-TUTOR.md | v0.2 — the applied index and the cadence delivery. |
-| 08-LIBRARIAN.md | v0.3 — relationships, refuted by default. |
+| [06-PRAXIS.md](06-PRAXIS.md) | which ideas actually changed something, with a receipt — and the inverse, which you never spent. |
+| [07-TUTOR.md](07-TUTOR.md) | one cited lesson at a time, the floor it must clear, and the switch that turns the loop off. |
+| [08-LIBRARIAN.md](08-LIBRARIAN.md) | the cross-book graph that was tested and refuted 27–1, and the narrower question that survived. |
+| [reference/CORPUS.md](reference/CORPUS.md) | every figure this project quotes, with the command that produced it and the channel it counts. |
+| [reference/KNOWN-GAPS.md](reference/KNOWN-GAPS.md) | what this does not do, or does not do reliably — from adversarial review of the shipped code. |
 | [FAQ.md](FAQ.md) | "I don't use a Kindle", "does it upload anything", "why did it find nothing". |
 
 ## Reference
@@ -30,7 +33,7 @@ failures threw an exception.
 | [reference/PITFALLS.md](reference/PITFALLS.md) | you are building anything similar. Twelve defects with symptom, root cause, what detected it, and the fix — plus nine cheap checks. |
 | [reference/DECISIONS.md](reference/DECISIONS.md) | you want the reversals and the evidence that forced them: a deletion feature abandoned on measurement, a graph hypothesis refuted, a ranking signal replaced. |
 | [reference/VERIFICATION.md](reference/VERIFICATION.md) | you need to trust machine-read output nobody has read: count reconciliation, multi-signal scoring, calibrating against a human, adversarial refutation. Ends in a checklist. |
-| [reference/AGENTS.md](reference/AGENTS.md) | the Librarian and Tutor design, stated after the corrections — including which parts the project's own evidence invalidated. |
+| [reference/AGENT-DESIGNS.md](reference/AGENT-DESIGNS.md) | the Librarian and Tutor design, stated after the corrections — including which parts the project's own evidence invalidated. |
 | [reference/CLASSIFY-PATHS.md](reference/CLASSIFY-PATHS.md) | you are choosing between the API and the agent path for cataloguing page marks. |
 
 Numbers throughout are measured against one real corpus (88 books, 4,425 highlights, 798
@@ -39,7 +42,7 @@ invalidated it is marked void rather than deleted; where something is unbuilt it
 
 ## Status labels
 
-Used once, in the README's status table, and referenced everywhere else:
+Defined in the README's status table, and referenced everywhere else:
 
 | label | means |
 |---|---|

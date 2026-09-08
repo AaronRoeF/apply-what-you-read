@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- One lesson in the morning. Copy to ~/Library/LaunchAgents/, change every path, then:
+       launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.example.tutor.plist
+     Note RunAtLoad is false: a scheduled job that fires the moment you install it is how you
+     learn what it does by receiving it, which is the wrong order. -->
+<plist version="1.0"><dict>
+  <key>Label</key><string>com.example.tutor</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>-lc</string>
+    <string>cd "$HOME/apply-what-you-read" &amp;&amp; VAULT="$HOME/vault" TUTOR_CHANNEL=file TUTOR_FILE="$HOME/vault/tutor-inbox.md" agents/tutor/run.sh</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <array>
+    <dict><key>Hour</key><integer>6</integer><key>Minute</key><integer>0</integer></dict>
+    <dict><key>Hour</key><integer>12</integer><key>Minute</key><integer>30</integer></dict>
+    <dict><key>Hour</key><integer>16</integer><key>Minute</key><integer>30</integer></dict>
+  </array>
+  <key>RunAtLoad</key><false/>
+  <key>StandardOutPath</key><string>/tmp/tutor.log</string>
+  <key>StandardErrorPath</key><string>/tmp/tutor.log</string>
+</dict></plist>

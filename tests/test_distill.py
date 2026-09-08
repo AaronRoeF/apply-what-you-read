@@ -117,3 +117,19 @@ def test_distill_one_success_prints_no_job_control_noise(tmp_path, merged):
     r = _run(tmp_path, merged, _stub_claude(tmp_path, "x" * 300))
     assert r.returncode == 0, r.stderr
     assert "Terminated" not in r.stderr + r.stdout, r.stderr
+
+
+def test_the_runner_grants_the_verb_that_creates_a_file():
+    """Review, engineering lens: the grant allowed Edit and denied Write, and the output file does
+    not exist when the agent starts. Creating a file is Write. Every test here drives a stub that
+    writes with a shell redirect and never asks permission, so no test could see it — the argv is
+    the only place this is checkable without a live run."""
+    src = (ROOT / "agents" / "distill" / "distill-one.sh").read_text(encoding="utf-8")
+    tools = re.search(r'^TOOLS="([^"]+)"', src, re.M).group(1)
+    assert "Write(//$VAULT/distill/**)" in tools, tools
+    assert "Edit(//$VAULT/distill/**)" in tools, tools
+    denied = re.search(r'--disallowedTools "([^"]+)"', src).group(1)
+    assert "Write" not in denied.split(","), f"Write is denied globally while being required: {denied}"
+    for scope in ("Read(//$ROOT/**)", "Read(//$VAULT/**)"):
+        assert scope in tools
+    assert "Write(//" in tools and tools.count("Write(") == 1, "write stays scoped to one directory"

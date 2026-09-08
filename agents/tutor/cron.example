@@ -1,0 +1,9 @@
+# Three lessons a day. Start with stdout redirected to a file for a week; move to your phone only
+# once the journal shows lessons you would have wanted to receive.
+#
+#   crontab -e   then paste, with the paths changed
+0  6 * * * cd ~/apply-what-you-read && VAULT=~/vault TUTOR_CHANNEL=file TUTOR_FILE=~/vault/tutor-inbox.md agents/tutor/run.sh >> ~/vault/.tutor.log 2>&1
+30 12 * * * cd ~/apply-what-you-read && VAULT=~/vault TUTOR_CHANNEL=file TUTOR_FILE=~/vault/tutor-inbox.md agents/tutor/run.sh >> ~/vault/.tutor.log 2>&1
+30 16 * * * cd ~/apply-what-you-read && VAULT=~/vault TUTOR_CHANNEL=file TUTOR_FILE=~/vault/tutor-inbox.md agents/tutor/run.sh >> ~/vault/.tutor.log 2>&1
+# Weekly, adjudicate what landed. Seven silent lessons in a row turn the loop off, loudly.
+0  9 * * 1 cd ~/apply-what-you-read && python agents/tutor/adjudicate.py --vault ~/vault --surfaces ~/writing --apply >> ~/vault/.tutor.log 2>&1

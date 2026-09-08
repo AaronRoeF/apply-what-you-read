@@ -59,32 +59,44 @@ EOF
   PY="$ROOT/.venv/bin/python"
 fi
 
-step "1/6  Kindle highlights: My Clippings.txt -> $RG_OUT/kindle-highlights.json"
+step "1/7  Kindle highlights: My Clippings.txt -> $RG_OUT/kindle-highlights.json"
 "$PY" -m capture.kindle clippings "$FX/clippings/My Clippings.txt" --out "$RG_OUT/kindle-highlights.json"
 
-step "2/6  photographed pages: manifest + OCR ($OCR_ENGINE) -> $RG_OUT/manifest.json, ocr.jsonl"
+step "2/7  photographed pages: manifest + OCR ($OCR_ENGINE) -> $RG_OUT/manifest.json, ocr.jsonl"
 "$PY" capture/pages/manifest.py --pages "$FX/pages" --out "$RG_OUT/manifest.json"
 "$PY" capture/pages/ocr.py --dir "$FX/pages" --out "$RG_OUT/ocr.jsonl" --engine "$OCR_ENGINE"
 
-step "3/6  book corpus (pages joined per book) -> $RG_OUT/bookcorpus/"
+step "3/7  book corpus (pages joined per book) -> $RG_OUT/bookcorpus/"
 "$PY" corpus/build_bookcorpus.py
 
-step "4/6  merge both channels -> $RG_OUT/merged/"
+step "4/7  merge both channels -> $RG_OUT/merged/"
 "$PY" corpus/merge_corpus.py
 
-step "5/6  one node per book -> $VAULT/books/"
+step "5/7  one node per book -> $VAULT/books/"
 "$PY" vault/build_nodes.py --vault "$VAULT" --corpus "$RG_OUT/merged"
 
 if [ "$WITH_CLAUDE" -eq 1 ]; then
-  step "6/6  distill the fixture book with claude -> $VAULT/distill/distill-meditations.md"
+  step "6/7  distill the fixture book with claude -> $VAULT/distill/distill-meditations.md"
   bash agents/distill/distill-one.sh meditations --context "$FX/reader-context.md"
   "$PY" vault/build_nodes.py --vault "$VAULT" --corpus "$RG_OUT/merged"
 else
-  step "6/6  distill (skipped — re-run with --with-claude, or open Claude Code here and say: distill Meditations)"
+  step "6/7  distill (skipped — re-run with --with-claude, or open Claude Code here and say: distill Meditations)"
 fi
 
 NODE="$VAULT/books/meditations.md"
 [ -f "$NODE" ] || { echo "quickstart: FAILED — expected $NODE to exist" >&2; exit 1; }
+
+# The point of the whole pipeline is not the node; it is one lesson, cited, that you would have
+# wanted to receive. The Tutor prints to stdout by default — no account, no key, no network.
+if [ "$WITH_CLAUDE" -eq 1 ]; then
+  step "7/7  one lesson from what you just built"
+  VAULT="$VAULT" RG_OUT="$RG_OUT" bash agents/tutor/run.sh --channel stdout || \
+    echo "  (the Tutor found nothing that met its floor — with one fixture book and no writing of" \
+         "your own, that can happen; it is a refusal, not a crash)"
+else
+  step "7/7  one lesson (skipped — re-run with --with-claude)"
+fi
+
 printf '\n✓ done. Your first node:\n  %s\n\n' "$NODE"
 head -20 "$NODE" | sed 's/^/  │ /'
 cat <<EOF
@@ -94,5 +106,7 @@ Next (first: source .venv/bin/activate — then \`python\` is this venv's):
                     (or: html <Export Notes>.html · readwise <export>.csv)   then steps 4-5 again
   your own pages    put photos in a folder per book, then steps 2-5 with --pages <that folder> (OCR_ENGINE=vision on macOS)
   the tests         bash tests/run.sh
-  the loop          docs/README.md — v0.2 adds Praxis and the Tutor (not in this release)
+  a lesson a day    VAULT=<your vault> bash agents/tutor/run.sh          (docs/07-TUTOR.md)
+  what you never used  READER_SURFACES=<your writing> python agents/librarian/candidates.py
+  the applied index VAULT=<v> READER_SURFACES=<w> bash agents/praxis/praxis-one.sh   (docs/06-PRAXIS.md)
 EOF

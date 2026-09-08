@@ -13,9 +13,12 @@
 # still names the output file — a prompt that lost its instructions never reaches the agent.
 #
 # TOOL SURFACE: the agent may read this repository, $RG_OUT, $VAULT and each READER_SURFACES
-# directory; it may write only under $VAULT/distill/; it may run grep and ls. Nothing else —
+# directory; it may create and edit files ONLY under $VAULT/distill/; it may run grep and ls.
+# Nothing else —
 # the operator's settings.json is not loaded (--setting-sources ""), so nothing widens this list.
-# Rule syntax: Read(//abs/path/**) — verified live, including a path with a space in it.
+# Rule syntax: Read(//abs/path/**) — verified live, including a path with a space in it. A COMMA
+# is a different matter: the list is comma-separated with no escape, so a path holding one is
+# refused above rather than silently splitting into two malformed rules.
 # The agent writes $VAULT/distill/distill-<slug>.md; this runner then CHECKS that the file exists
 # and is non-trivial — a run that ends cleanly without writing is a failure here, not a success.
 set -uo pipefail
@@ -32,6 +35,13 @@ CLAUDE_BIN="${CLAUDE_BIN:-$(command -v claude || true)}"
 [ -f "$RG_OUT/merged/$SLUG.json" ] || { echo "distill-one: no merged record at $RG_OUT/merged/$SLUG.json — run corpus/merge_corpus.py first" >&2; exit 2; }
 TIMEOUT="${DISTILL_TIMEOUT_SECS:-900}"
 case "$TIMEOUT" in ''|*[!0-9]*) echo "distill-one: DISTILL_TIMEOUT_SECS must be digits, got '$TIMEOUT'" >&2; exit 2 ;; esac
+# A comma in any of these paths silently breaks the agent's permissions. The rule list passed to
+# --allowedTools is comma-separated and the syntax has no escape, so `Books (2024), notes` becomes
+# two malformed rules and the agent is left without the grant it needs. Measured: a space is fine,
+# a comma is not. Refuse at the start rather than let the reader debug an agent that read nothing.
+for _p in "$VAULT" "$RG_OUT" ${READER_SURFACES:+$(printf '%s' "$READER_SURFACES" | tr ':' ' ')}; do
+  case "$_p" in *,*) echo "REFUSED — a comma in a path breaks the agent's permission rules, which are comma-separated with no escape: '$_p'. Rename it or point at a path without a comma." >&2; exit 2 ;; esac
+done
 mkdir -p "$VAULT/distill"
 OUT_FILE="$VAULT/distill/distill-$SLUG.md"
 CONTEXT_TEXT="(no reader context supplied)"
@@ -66,7 +76,11 @@ $CONTEXT_TEXT
 $PROMPT"
 
 # Read only what the job needs; write only the distillation; no other shell.
-TOOLS="Read(//$ROOT/**),Read(//$RG_OUT/**),Read(//$VAULT/**),Edit(//$VAULT/distill/**),Bash(grep:*),Bash(ls:*),Grep,Glob"
+# Write AND Edit, both scoped to the distillation directory: the output file does not exist yet,
+# and creating a file is Write, not Edit. Denying Write globally while granting only Edit left the
+# agent unable to perform the single action this runner exists to make it perform — a gap the stub
+# in the tests could not show, because a stub writes with a shell redirect and never asks.
+TOOLS="Read(//$ROOT/**),Read(//$RG_OUT/**),Read(//$VAULT/**),Write(//$VAULT/distill/**),Edit(//$VAULT/distill/**),Bash(grep:*),Bash(ls:*),Grep,Glob"
 IFS=':' read -r -a SURF <<< "${READER_SURFACES:-}"
 for d in "${SURF[@]:-}"; do [ -n "$d" ] && TOOLS="$TOOLS,Read(//$d/**)"; done
 
@@ -75,7 +89,7 @@ for d in "${SURF[@]:-}"; do [ -n "$d" ] && TOOLS="$TOOLS,Read(//$d/**)"; done
 # proven live in review). --disallowedTools: deny beats allow, belt and braces. Both flags
 # follow --allowedTools so a stub claude can still read the prompt and the list positionally.
 "$CLAUDE_BIN" -p "$PROMPT" --allowedTools "$TOOLS" --setting-sources "" \
-  --disallowedTools "Write,NotebookEdit,WebFetch,WebSearch,Agent" < /dev/null &
+  --disallowedTools "NotebookEdit,WebFetch,WebSearch,Agent" < /dev/null &
 PID=$!
 ( sleep "$TIMEOUT"; kill -0 "$PID" 2>/dev/null && { kill -TERM "$PID"; sleep 5; kill -KILL "$PID" 2>/dev/null; } ) >/dev/null 2>&1 &
 WATCH=$!

@@ -339,7 +339,7 @@ from a file the agent actually read, or a scenario explicitly labelled as hypoth
 of the three, not sent. A resurfacing agent that cannot cite its source and say where the
 idea lands is a quote bot, and a quote bot trains its reader to skip the section it appears
 in. The rule is stated in full, with the failure it exists to prevent, in
-[AGENTS.md](AGENTS.md).
+[AGENT-DESIGNS.md](AGENT-DESIGNS.md).
 
 ---
 

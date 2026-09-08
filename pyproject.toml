@@ -1,6 +1,6 @@
 [project]
 name = "apply-what-you-read"
-version = "0.1.0"
+version = "0.2.0"
 description = "Continuous learning from the books you read: annotations in, a vault of book nodes out, one cited lesson at a time."
 readme = "README.md"
 requires-python = ">=3.11"

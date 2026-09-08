@@ -1,27 +1,114 @@
 # apply-what-you-read
 
-Use a Kindle? Take book notes? Here is how to build a pipeline that turns them into continuous
-learning from the books you have already read — one lesson at a time, delivered where you will
-actually see it, with a citation you can check in ten seconds.
+**Name three ideas from the books you read last year that changed how you work.**
 
-A highlight is a judgement you already made. This project is what makes that judgement pay
-compounding interest instead of evaporating.
+Most people who read a great deal cannot, and it is not a memory problem. You already did the
+hard part: you noticed the passage was important and you marked it. Then the book closed and the
+mark stopped existing.
 
-It runs end to end in under a minute on a public-domain book that ships with the repository,
-so you can see what it does before you point it at your own library:
+Here is one attempt to measure it. One real library: 88 books and 5,211 marked passages —
+highlights from an e-reader plus photographed pages — searched word-for-word against 2,235 files
+the reader had written since. Every figure in this document, and where it came from, is in
+[reference/CORPUS](docs/reference/CORPUS.md).
+
+| | |
+|---|---|
+| marks whose words appear nowhere in their own writing | **5,189** |
+| marks whose words appear somewhere | **21** |
+| of those, ideas that had genuinely travelled, read by hand | **about 5** |
+
+Take the instrument's limits seriously, because they cut both ways. Searching for exact phrases
+cannot see an idea you absorbed and put in your own words, or one that changed a decision you
+never wrote down — so the true figure is kinder than 5,189. It also cannot tell a real reuse from
+a coincidence of the language, which is why 21 becomes about five once a person reads them. The
+project's own docs say this at more length in [08-LIBRARIAN](docs/08-LIBRARIAN.md), including the
+tightening that did not work.
+
+What survives the caveats is still stark. The most-marked book in that library carries 595 marked
+passages and not one of them turns up anywhere. The library is a serious one, marked carefully over
+years, by someone who reads more than most people you know.
+
+## What this does about it
+
+Tomorrow morning, one passage you marked arrives — with what its author was actually arguing,
+one concrete thing to do about it this week, and a citation you can open in ten seconds to check
+that the whole thing is real.
+
+```
+APPLY WHAT YOU READ LESSON
+
+HELD: "it is in thy power to retire into thyself, and to be at rest" — Meditations, loc 269, 🩷.
+Marcus is arguing that the retreat people look for in the countryside is available at any moment,
+and that going looking for it elsewhere is itself the avoidance.
+
+WHY HELD: Marked two years ago, never spent since.
+
+APPLY: Suppose you take ten minutes before the first meeting tomorrow, door shut, no inbox.
+
+(citation: Meditations loc 269 🩷)
+```
+
+Not a summary. Not a flashcard. One idea you already decided was worth keeping, handed back at a
+moment when you can use it, in a channel you already open.
+
+**It also ranks your library by what you appear never to have used.** The same search, inverted.
+On the reference library the top of that list held four books with over 300 marks each and no
+verbatim reuse anywhere at all. Read it as a list of places to look, not a verdict — the instrument is
+literal, and you will find at least one book on it whose ideas you use every week without ever
+quoting them.
+
+## What it costs to try
+
+It runs end to end on a public-domain book that ships with the repository, so you can watch the
+whole pipeline work before you point it at your own library:
 
 ```bash
 git clone https://github.com/AaronRoeF/apply-what-you-read && cd apply-what-you-read
-bash quickstart.sh
+bash quickstart.sh --with-claude
 ```
 
-## What it does
+Seven steps, ending in a lesson printed to your terminal — or, on one fixture book with none of
+your own writing to draw on, a clean refusal explaining why nothing cleared the bar. Both are a
+pass; the refusal is the rule working.
+
+| | `bash quickstart.sh` | `bash quickstart.sh --with-claude` |
+|---|---|---|
+| how long | about 5 seconds | about 9 minutes, measured |
+| account | none | a [Claude Code](https://claude.com/claude-code) login |
+| network | one download of two Python packages, once | that, plus this one book's text to Anthropic's API |
+| ends with | one book as a markdown file you can open | that, plus a distillation and one cited lesson |
+
+Nothing uploads your library, then or ever — [05-DISTILL](docs/05-DISTILL.md) lists exactly what
+leaves the machine.
+
+**Then your own highlights, and here the honest number is hours, not minutes.** Getting marks out
+of an e-reader is easy if you can plug the device in and copy one file. It is tedious if you read
+in a phone app, where the export arrives as one email per book. It costs a subscription if you go
+through a third-party service. [02-KINDLE](docs/02-KINDLE.md) walks all three; read it before you
+plan an evening around this.
+
+**Or hand the whole thing to your agent.** Clone this, open it in Claude Code or any coding agent,
+and say:
+
+> Read AGENTS.md and build me a plan for my own library.
+
+It will ask you five questions — where your highlights live, whether you have photographed pages,
+where you write, where a lesson should arrive, and whether your vault path has a comma in it,
+which breaks the agents' permission rules — and hand back an ordered plan with what will not work
+for you and why. `AGENTS.md` is written for the agent rather than for
+you: the order of operations, the decisions already settled with their evidence, and the mistakes
+that would otherwise cost you a session. Read the plan before you let it start.
+
+## How it works
+
+Your marks come out of the places they already live, get joined into one corpus of plain markdown,
+and every later stage reads that corpus and cites what it used. No stage infers what you meant.
 
 ```
 capture  →  normalize  →  merge  →  vault  →  distill  →  Praxis  →  Tutor  →  Librarian
 ```
 
-Two channels of annotation, merged into one corpus, written to plain markdown:
+Your marks arrive through three channels, merged into one corpus:
 
 | channel | what it captures | how |
 |---|---|---|
@@ -29,8 +116,8 @@ Two channels of annotation, merged into one corpus, written to plain markdown:
 | **photographed pages** | pen marks, brackets, marginalia, filled-in worksheets, any book never read on a screen | local OCR (Apple Vision via PyObjC) — no network, no API key; a stub engine elsewhere |
 | **an Apple Notes folder** (v0.2) | everything you keep in one Notes folder: typed text, photographed pages, and Apple Pencil handwriting | an exporter reads the Notes database read-only and carries the text Apple already recognised — its own OCR of each photo and the stroke recogniser's text for handwriting, which beats image OCR on the same page — into the photographed-pages channel; a watcher keeps the folder flowing |
 
-Neither channel is a superset of the other, and that turns out to matter more than anything
-else here. A pass built on photographs alone concluded a reader "never engaged" with a chapter
+Neither channel is a superset of the other, and that has caused more trouble here than anything
+else. A pass built on photographs alone concluded a reader "never engaged" with a chapter
 they had in fact marked twenty-two times in the other channel. See
 [docs/reference/PITFALLS.md](docs/reference/PITFALLS.md); that failure has four siblings.
 
@@ -43,7 +130,9 @@ an index of the ideas you actually used; the **Tutor**, one cited lesson at a ti
 you already open; the **Librarian**, which looks for relationships and is built to refuse
 most of what it finds.
 
-## Two results worth knowing before you fork this
+## Two things this got wrong, and what they cost
+
+Before the features, the failures. These two shaped everything above.
 
 **A verification pass that returns nothing is a result.** The original thesis was that the
 payoff would be a graph of connections *between* books. Twenty-eight candidate edges were
@@ -60,15 +149,13 @@ wrong agent.
 of all marks in the reference corpus, and an early analysis ranked them highest on that basis.
 They are 1% because typing on an e-reader is annoying. The replacement signal is
 *corroboration* — did a mark change anything outside the book — which is observable rather than
-interpretive. Applied to the twenty-eight books that had been distilled, it returned 4 corroborated, 11 partial, and 13 with
+interpretive. Hand-adjudicated across twenty-eight books, it returned 4 corroborated, 11 partial, and 13 with
 no receipt anywhere else.
 
 ## Status
 
 Labels are defined here and referenced everywhere else. **Shipped** — in this repository
-today; the quickstart or a test exercises it. **Proven, landing** — running in the author's
-instance; the public port is in flight and flips to Shipped in the release it lands.
-**Designed** — specified, with the evidence for the design; not built.
+today; the quickstart or a test exercises it. **Designed** — specified, with the evidence for the design; not built.
 
 | capability | status | where |
 |---|---|---|
@@ -79,17 +166,26 @@ instance; the public port is in flight and flips to Shipped in the release it la
 | Vault: one node per book, nine enforced rules, each tested | Shipped | `vault/build_nodes.py`, [04-VAULT](docs/04-VAULT.md) |
 | Distill: skill, headless runner, frozen-manifest workflow, three ground rules | Shipped | `skills/distill/`, `agents/distill/`, [05-DISTILL](docs/05-DISTILL.md) |
 | Fixture: public-domain book, every input format, provenance enforced by test | Shipped | `fixtures/meditations/` |
-| Apple Notes folder → pipeline: typed text, photos with Apple's own OCR, Pencil handwriting via the recogniser's text, a watcher | Designed (v0.2) | arrives as `capture/notes/`; design in [03-PHOTOS-AND-NOTES](docs/03-PHOTOS-AND-NOTES.md) |
-| Praxis: the applied index (idea → use, with receipts) | Proven, landing (v0.2) | arrives as `agents/praxis/`; design in [reference/AGENTS](docs/reference/AGENTS.md) |
-| Tutor: one cited lesson per run, ledger, kill switch, weekly adjudication | Proven, landing (v0.2) | arrives as `agents/tutor/`; design in [reference/AGENTS](docs/reference/AGENTS.md) |
+| Apple Notes folder → pipeline: typed text, photos with Apple's own OCR, Pencil handwriting via the recogniser, four note kinds, and a watcher that exports only what changed | Shipped (macOS) | `capture/notes/`, [03-PHOTOS-AND-NOTES](docs/03-PHOTOS-AND-NOTES.md) |
+| Praxis: the applied index — a proposer, then a skeptic that refuses by default | Shipped | `agents/praxis/`, [06-PRAXIS](docs/06-PRAXIS.md) |
+| Tutor: one cited lesson per run — compose-only, a floor checked in code, three channels, a ledger, and a loud kill switch | Shipped | `agents/tutor/`, [07-TUTOR](docs/07-TUTOR.md) |
 | Reference crawler for a notebook web view, with the silent-zero regression tests | Designed (v0.3) | arrives as `capture/kindle/notebook_crawl.py`; technique in [02-KINDLE](docs/02-KINDLE.md) |
-| Librarian v0: candidates by multi-word corroboration, judge, refute-by-default | Designed (v0.3) | arrives as `agents/librarian/`; design in [reference/AGENTS](docs/reference/AGENTS.md) |
+| Librarian: the corroboration matcher — which marked ideas left a receipt, and which never did | Shipped | `agents/librarian/candidates.py`, [its README](agents/librarian/README.md) |
+| Librarian: judge and refute-by-default for the cross-book case | Designed, deliberately unbuilt | the premise is refuted 27–1; [08-LIBRARIAN](docs/08-LIBRARIAN.md) |
 | Cross-book knowledge graph | Refuted 27–1 — not on the roadmap | [docs/reference/DECISIONS.md](docs/reference/DECISIONS.md) |
 
-## What you get in the first hour
+## The first hour, and the first week
 
-The quickstart's node, from the fixture, with the two channels counted side by side
-(abridged — eight of its sixteen keys):
+In an hour: your own library, parsed. Every book you have marked becomes one markdown file with
+its highlights, its colours and its photographed pages counted side by side, and you can finally
+see the shape of what you have been collecting. Most people are surprised twice — by how much is
+there, and by which books turn out to be empty.
+
+In a week: the books that matter distilled to the fifth that carries them, your own marks mapped
+onto that, and a lesson a day. By the end of it the ledger has outcomes in it and you know which
+lessons landed.
+
+The node the quickstart produces (abridged — eight of its sixteen keys):
 
 ```yaml
 name: "Meditations"
@@ -106,13 +202,19 @@ Then your own Kindle, then a distillation whose first line says exactly how much
 it saw. [docs/00-QUICKSTART.md](docs/00-QUICKSTART.md) walks it, with the real output pasted
 after each step.
 
-## What week three feels like
+## The part that decides whether this survives
 
-A ledger with outcomes in it. A lesson from a book you finished two years ago, landing on a
-decision you are making this week, with the location so you can check it in ten seconds. And a
-loop that turns itself off, loudly, if it becomes wallpaper — because a channel that gets
-skimmed is a channel where this dies quietly. That is v0.2; the design and its evidence are in
-[docs/reference/AGENTS.md](docs/reference/AGENTS.md).
+A daily channel you learn to ignore is worse than one you never set up, so the loop is built to
+notice that and stop. Every lesson gets a row in a ledger and a check-due date two weeks out. A
+lesson landed if your own writing picked its idea up, or if you opened the file it cited. You are
+never asked whether it was useful — that answer is unreliable and the asking is itself a cost.
+
+**Seven lessons in a row that land nowhere turn it off.** Not quieter, not less often: off, with
+the reason written into the ledger, until you switch it back on yourself.
+
+Anything that arrives on a schedule eventually becomes wallpaper, and a system that keeps sending
+into silence has stopped being a tutor and become a notification. [07-TUTOR](docs/07-TUTOR.md) has the rest, including what
+the design does *not* guarantee.
 
 ## Requirements
 
@@ -150,17 +252,22 @@ company product — this is one person's reading system, published so it can be 
 
 | doc | read it if |
 |---|---|
-| [00-QUICKSTART](docs/00-QUICKSTART.md) | you have five minutes and a terminal |
+| [00-QUICKSTART](docs/00-QUICKSTART.md) | you have five minutes and a terminal — start here |
+| [07-TUTOR](docs/07-TUTOR.md) | you want to see what actually arrives, and what stops it becoming wallpaper |
+| [06-PRAXIS](docs/06-PRAXIS.md) | you want the list of what you have never used |
 | [01-HOW-IT-WORKS](docs/01-HOW-IT-WORKS.md) | you want the stage-by-stage shape before the code |
 | [02-KINDLE](docs/02-KINDLE.md) | you are getting highlights out of a Kindle — three formats, then the crawler technique |
 | [03-PHOTOS-AND-NOTES](docs/03-PHOTOS-AND-NOTES.md) | you read on paper or mark with a pen |
 | [04-VAULT](docs/04-VAULT.md) | one node per book: the contract and the rules |
 | [05-DISTILL](docs/05-DISTILL.md) | the 20%, your marks, and the fidelity tag |
+| [08-LIBRARIAN](docs/08-LIBRARIAN.md) | the graph that was refuted 27–1, and what survived |
 | [FAQ](docs/FAQ.md) | "I don't use a Kindle" and the other first questions |
 | [reference/PITFALLS](docs/reference/PITFALLS.md) | **start here if you are building anything similar.** Twelve defects; almost none threw. |
 | [reference/DECISIONS](docs/reference/DECISIONS.md) | the reversals and the evidence that forced them |
 | [reference/VERIFICATION](docs/reference/VERIFICATION.md) | trusting machine-read output nobody has read |
-| [reference/AGENTS](docs/reference/AGENTS.md) | the Librarian and the Tutor, designed after the corrections |
+| [reference/CORPUS](docs/reference/CORPUS.md) | every number here, with the command that produced it — read this before believing any of them |
+| [reference/KNOWN-GAPS](docs/reference/KNOWN-GAPS.md) | what it does not do, or does not do reliably — including where a guard is a floor rather than a proof |
+| [reference/AGENTS](docs/reference/AGENT-DESIGNS.md) | the Librarian and the Tutor, designed after the corrections |
 
 ## Contributing
 

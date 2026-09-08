@@ -34,34 +34,36 @@ One block per stage. This is the real output of a run on a clean machine; paths 
 ▶ python
   building .venv with /usr/local/bin/python3.13 (python 3.13.x)     ← first run only
 
-▶ 1/6  Kindle highlights: My Clippings.txt -> out/kindle-highlights.json
+▶ 1/7  Kindle highlights: My Clippings.txt -> out/kindle-highlights.json
 parsed clippings fixtures/meditations/clippings/My Clippings.txt: 35 annotations in 1 book(s)
 wrote out/kindle-highlights.json: 1 book(s), 35 annotations
 plausibility: books=1 annotations=35 sorted counts = [35]
   no plausibility flags
 
-▶ 2/6  photographed pages: manifest + OCR (stub) -> out/manifest.json, ocr.jsonl
+▶ 2/7  photographed pages: manifest + OCR (stub) -> out/manifest.json, ocr.jsonl
   notes              1
   notes_with_images  1
   raster_images      5
   sidecars           1
 ocr[stub]: 5 images, 5 ok -> out/ocr.jsonl
 
-▶ 3/6  book corpus (pages joined per book) -> out/bookcorpus/
+▶ 3/7  book corpus (pages joined per book) -> out/bookcorpus/
   BOOK                                           pgs   cat      chars  via
   Meditations                                      5     0      6,196  declared
   TOTAL                                            5     0
 
-▶ 4/6  merge both channels -> …/apply-what-you-read/out/merged/
+▶ 4/7  merge both channels -> …/apply-what-you-read/out/merged/
 BOOK                                         kindle photo note ≠yel
 Meditations                                      35     5    5    0
 
 1 book(s) -> …/apply-what-you-read/out/merged/
 
-▶ 5/6  one node per book -> demo-vault/books/
+▶ 5/7  one node per book -> demo-vault/books/
 build_nodes: 1 written, 0 unchanged, 0 orphaned, 0 collisions, 0 spooled -> demo-vault/books
 
-▶ 6/6  distill (skipped — re-run with --with-claude, or open Claude Code here and say: distill Meditations)
+▶ 6/7  distill (skipped — re-run with --with-claude, or open Claude Code here and say: distill Meditations)
+
+▶ 7/7  one lesson (skipped — re-run with --with-claude)
 
 ✓ done. Your first node:
   demo-vault/books/meditations.md
@@ -133,7 +135,8 @@ source .venv/bin/activate      # the venv the quickstart built; `python` is now 
 rm -rf out/                    # it holds only the fixture's results; left in place, the fixture's book would merge into YOUR vault
 ```
 
-(Every stage reads and writes under `out/`, or under `RG_OUT` if you set it. Steps 4–5 merge
+(Every stage reads and writes under `out/`, or under `RG_OUT` if you set it — except the two
+`capture/pages/` scripts, which take a required `--out` and do not read the variable. Steps 4–5 merge
 whatever is there — so the fixture's manifest and OCR output would give your vault a
 *Meditations* node you never read.)
 
@@ -164,8 +167,12 @@ expected to keep it green — `CONTRIBUTING.md`.
 
 ## 6. Where this goes
 
-Praxis (`06-PRAXIS.md`) and the Tutor (`07-TUTOR.md`) close the loop — an index of ideas you
-actually used, and one cited lesson a day to a channel you already open — and the Librarian
-(`08-LIBRARIAN.md`) looks for relationships and is built to refuse most of what it finds.
-**None of the three is in this release.** The README's status table says which version each
-arrives in; `docs/reference/AGENTS.md` has the designs and the evidence behind them.
+You have already seen the end of it: step 7 either printed a lesson or explained why the
+Tutor's floor refused one, which on a single fixture book is the honest answer. From here,
+
+- **[06-PRAXIS](06-PRAXIS.md)** — the ideas that actually changed something, each with a receipt,
+  and the inverse: which marked passages you never spent.
+- **[07-TUTOR](07-TUTOR.md)** — one cited lesson at a time on a schedule, the floor a lesson must
+  clear, and the switch that turns the loop off after seven silences rather than becoming wallpaper.
+- **[08-LIBRARIAN](08-LIBRARIAN.md)** — the cross-book graph that was tested and refuted 27–1, and
+  what survived it. Read this before building anything similar.

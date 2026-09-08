@@ -153,3 +153,41 @@ def test_every_shipped_module_compiles_before_python_3_12():
         pytest.skip("no interpreter older than 3.12 on this machine — CI's 3.11 leg covers it")
     r = subprocess.run([interps[0], "-m", "py_compile", *map(str, SHIPPED_PY)], capture_output=True, text=True)
     assert r.returncode == 0, f"{interps[0]}: {r.stderr}"
+
+
+def test_importing_a_pipeline_module_does_nothing():
+    """Review found `import corpus.merge_corpus` DELETING out/merged/* and then raising if the
+    Kindle export was absent — so a clean clone failed three tests before the quickstart had run,
+    and CI runs the tests first. A module you can import is a module you can test; a module that
+    acts on import is a trap with a helper in it."""
+    import importlib, sys as _sys
+    canary = ROOT / "out" / "merged" / "_import_canary.json"
+    canary.parent.mkdir(parents=True, exist_ok=True)
+    canary.write_text('{"canary": true}', encoding="utf-8")
+    try:
+        for name in ("corpus.merge_corpus", "corpus.build_bookcorpus", "vault.build_nodes",
+                     "capture.pages.manifest", "capture.notes.apple_notes",
+                     "agents.librarian.candidates"):
+            _sys.modules.pop(name, None)
+            try:
+                importlib.import_module(name)
+            except ImportError:
+                continue                     # a module that is not a package is out of scope here
+            assert canary.exists(), f"importing {name} deleted files under out/merged"
+    finally:
+        canary.unlink(missing_ok=True)
+
+
+def test_a_clean_clone_passes_its_own_tests():
+    """CI runs the suite before the quickstart, so the suite may not depend on prior-stage state."""
+    import shutil, tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        dst = pathlib.Path(tmp) / "clone"
+        shutil.copytree(ROOT, dst, ignore=shutil.ignore_patterns(
+            ".venv", "out", "demo-vault", "__pycache__", ".pytest_cache", "*.pyc"))
+        # Never this file: it holds this test, and running it inside the clone recurses.
+        r = subprocess.run([sys.executable, "-m", "pytest", "-q", "-x", "-p", "no:cacheprovider",
+                            "tests/test_kindle_parsers.py", "tests/test_build_nodes.py",
+                            "tests/test_docs.py"],
+                           capture_output=True, text=True, cwd=dst, timeout=180)
+        assert r.returncode == 0, r.stdout[-2500:]

@@ -83,8 +83,9 @@ without writing. If you find another silent zero, `reference/PITFALLS.md` is whe
 open an issue with the sorted-counts line.
 
 **I keep my book notes in Apple Notes, with photos and Pencil handwriting. Does that work?**
-Designed for v0.2: an exporter reads one Notes folder from a read-only copy of the database and
+On macOS: an exporter reads one Notes folder from a read-only copy of the database and
 carries the text Apple already recognised — its own OCR of each photo and the handwriting
 recogniser's text for Pencil pages — into the photographed-pages channel, with a watcher that
-keeps the folder flowing. See [03-PHOTOS-AND-NOTES](03-PHOTOS-AND-NOTES.md), last section.
-Until it lands, export the photos to a folder per book and follow that document.
+keeps the folder flowing. Start with `--dry-run`, which writes nothing and names every note. See
+[03-PHOTOS-AND-NOTES](03-PHOTOS-AND-NOTES.md), last section. Off macOS, export the photos to a
+folder per book and follow the rest of that document.

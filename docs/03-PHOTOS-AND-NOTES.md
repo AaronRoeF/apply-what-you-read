@@ -103,11 +103,18 @@ history warns about most loudly — one such finding was refuted by twenty-two h
 that chapter in the other channel. `merge_corpus.py` writes the warning into every merged file,
 and every consumer of the corpus is expected to honour it: never infer a gap from missing data.
 
-## From an Apple Notes folder (designed, v0.2)
+## From an Apple Notes folder
 
-If your book notes live in Apple Notes — a folder such as *Book Notes* holding one note per
-book, with photographed pages, typed remarks, and Apple Pencil handwriting — the pipeline can
-read that folder directly. Not in this release; the design is fixed and this is what lands.
+If your book notes live in Apple Notes — a folder holding one note per book, with photographed
+pages, typed remarks, and Apple Pencil handwriting — the pipeline reads that folder directly on
+macOS:
+
+```bash
+python capture/notes/apple_notes.py --folder Praxis --library <your vault>/books --dry-run
+python capture/notes/watch.py --folder Praxis --library <your vault>/books --run
+```
+
+Start with `--dry-run`: it names every note and what it would become, and writes nothing.
 
 **What Apple already recognised.** The Notes database on a Mac
 (`~/Library/Group Containers/group.com.apple.notes/NoteStore.sqlite`) stores, per attachment,
@@ -125,16 +132,23 @@ image OCR mangles. Local Vision runs only where Apple's text is empty, or when y
 second reading; both readings are kept, and the plausibility report prints their overlap per
 page so a disagreement is visible instead of silently resolved.
 
-**Which book.** The note's title is the book. A trailing number is a continuation note
-("Meditations", "Meditations 2" → one book). A title that resolves to no book is refused
-out loud, never guessed; a small mapping file overrides by hand. Folder placement is the only
-evidence of book-ness — an earlier rule that accepted any note with five or more images
-mis-titled slide decks as books.
+**Four kinds, decided by evidence.** A note holding pages is a **book**. A typed note with no
+pages whose title names a book already in your library is a **book-note**, which becomes its own
+node linked to that book rather than inventing a book with no pages — that is what `--library`
+is for, and on the first real run it was the difference between nineteen notes filed as loose
+wisdom and nineteen notes filed under their books. A short note ending in an attribution line
+("— Author, Work") is a **quote**. Anything else short and text-only is **wisdom**. A note that
+fits none is exported as wisdom marked `unsorted` and named in the report; nothing is dropped.
+A trailing number is a continuation ("Meditations", "Meditations 2" → one book), and your own
+mapping file beats every rule above.
 
-**Kept flowing.** A watcher polls the folder's modification dates against a small state file
-and re-exports only the notes that changed, then re-runs the stages for that book. Unchanged
-nodes are not rewritten. A note you delete never deletes a node; the node just records that
-its source is gone. The app's own notes are never written to.
+**Kept flowing.** `watch.py` compares each note's content hash against a small state file and
+re-exports only what moved, then optionally re-runs the stages. Apple rewrites modification dates
+in bulk on sync, so the hash decides and the date is only a cheap pre-filter. Unchanged files are
+not rewritten, so a nightly run is free and mtimes stay meaningful. A note you delete in Apple
+Notes deletes nothing here: the disappearance is recorded in the state file and the exported
+files stay. The database is copied before it is opened, and opened read-only — your notes are
+never written to.
 
 **Tested without your notes.** The database layer sits behind one function, and a generator
 builds a three-note synthetic database in the same shape, with fixture images, a fake Pencil

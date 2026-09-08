@@ -86,9 +86,155 @@ def test_docs_index_lists_every_doc():
 
 def test_readme_defines_the_status_labels_once():
     readme = (ROOT / "README.md").read_text(encoding="utf-8")
-    assert "**Shipped**" in readme and "**Proven, landing**" in readme and "**Designed**" in readme
+    # Two labels now. "Proven, landing" was retired when the last agent it described shipped; a
+    # label defined and never used is a promise the table does not keep.
+    assert "**Shipped**" in readme and "**Designed**" in readme
+    body = readme.split("## Status", 1)[-1].split("\n## ", 1)[0]
+    assert "Proven, landing" not in body, "a status label must be used by the table that defines it"
     for doc in DOCS:
         if doc.name == "README.md":
             continue
         text = doc.read_text(encoding="utf-8")
         assert "**Proven, landing** —" not in text, f"{doc.name} restates the label definitions"
+
+
+def test_every_example_citation_resolves_in_the_shipped_fixture():
+    """The docs promise "a citation you can check in ten seconds". An example citation pointing at
+    a location the fixture does not contain breaks that promise in the most-read text in the
+    project — and it shipped once: loc 496, in a fixture whose range is 100–362."""
+    import csv
+    fixture = ROOT / "fixtures" / "meditations" / "readwise" / "highlights.csv"
+    rows = list(csv.DictReader(fixture.open(encoding="utf-8")))
+    locs = {r["Location"].strip() for r in rows if r.get("Location", "").strip().isdigit()}
+    assert locs, "the fixture must carry locations to check against"
+    bad = []
+    for p in sorted(ROOT.rglob("*.md")) + sorted(ROOT.rglob("*.py")) + sorted(ROOT.rglob("*.sh")):
+        if any(x in p.parts for x in (".venv", "out", "fixtures", "__pycache__")):
+            continue
+        for i, line in enumerate(p.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
+            for m in re.finditer(r"Meditations[, ]+loc(?:ation)? (\d+)", line):
+                if m.group(1) not in locs:
+                    bad.append(f"{p.relative_to(ROOT)}:{i} cites loc {m.group(1)}")
+    assert not bad, "example citations must resolve in the fixture: " + "; ".join(bad)
+
+
+def test_the_agent_brief_exists_under_both_names_and_stays_in_step():
+    """Someone pointing an agent at this repo is a supported path, so the repo has to answer when
+    one arrives. Claude Code reads CLAUDE.md; other harnesses read AGENTS.md. Two names, one brief,
+    and a test so they cannot drift."""
+    a = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+    c = (ROOT / "CLAUDE.md").read_text(encoding="utf-8")
+    assert a.strip(), "AGENTS.md must not be empty"
+    # Equivalence OR a pointer. Claude Code loads CLAUDE.md automatically, so a copy would put the
+    # brief into context twice in the very invocation the README suggests; a pointer must actually
+    # point, which is what this checks.
+    assert a in c or "AGENTS.md" in c, "CLAUDE.md must carry the brief or point at it by name"
+    if a not in c:
+        assert len(c) < 1200, "a pointer that long is a second brief drifting out of step"
+    for required in ("Ask these five things", "do not re-litigate", "KNOWN-GAPS",
+                     "quickstart.sh", "READER_SURFACES", "Do not start building"):
+        assert required in a, f"the agent brief must cover: {required}"
+
+
+def test_the_agent_brief_points_only_at_files_that_exist():
+    """A brief that names a missing file sends an agent looking for it, which is worse than saying
+    nothing."""
+    text = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+    missing = []
+    for m in re.finditer(r"`([a-zA-Z0-9_./-]+\.(?:md|py|sh))`", text):
+        rel = m.group(1)
+        if rel.startswith(("http", "-")) or "*" in rel:
+            continue
+        if not (ROOT / rel).exists():
+            missing.append(rel)
+    assert not missing, f"the agent brief names files that do not exist: {sorted(set(missing))}"
+
+
+def test_every_command_in_the_agent_brief_is_real():
+    """The brief's whole value is that an agent can follow it without reading the source. A command
+    that does not exist, or a flag a script does not take, spends exactly the session the brief is
+    meant to save."""
+    import shlex
+    text = (ROOT / "AGENTS.md").read_text(encoding="utf-8")
+    block = re.search(r"```bash\n(.*?)```", text, re.S)
+    assert block, "the brief must carry a runnable sequence, not just file names"
+    problems = []
+    for raw in block.group(1).splitlines():
+        line = raw.strip().lstrip("#").strip()
+        if not line or line.startswith(("export ", "source ", "rm ", "or:", "add ", "later:")):
+            continue
+        try:
+            parts = shlex.split(line)
+        except ValueError:
+            continue
+        if parts[0] not in ("python", "bash"):
+            continue
+        # the script or module the line runs
+        if parts[1] == "-m":
+            mod = parts[2].replace(".", "/")
+            if not (ROOT / mod).exists() and not (ROOT / (mod + ".py")).exists():
+                problems.append(f"no module {parts[2]}")
+            target, flags = None, parts[3:]
+        else:
+            target, flags = parts[1], parts[2:]
+            if not (ROOT / target).exists():
+                problems.append(f"no such file: {target}")
+                continue
+        if target and target.endswith(".py"):
+            src = (ROOT / target).read_text(encoding="utf-8")
+            for f in [x for x in flags if x.startswith("--")]:
+                if f'"{f}"' not in src and f"'{f}'" not in src:
+                    problems.append(f"{target} does not take {f}")
+    assert not problems, "the agent brief names commands that do not work: " + "; ".join(problems)
+
+
+def test_the_agent_brief_does_not_contradict_the_known_gaps():
+    """Two documents disagreed about whether a space in a vault path breaks the agents. A
+    measurement settled it — a comma does, a space does not — and both files must say so."""
+    brief = re.sub(r"\s+", " ", (ROOT / "AGENTS.md").read_text(encoding="utf-8"))
+    gaps = re.sub(r"\s+", " ", (ROOT / "docs" / "reference" / "KNOWN-GAPS.md").read_text(encoding="utf-8"))
+    assert "comma" in brief and "comma" in gaps
+    assert "spaces or parentheses produces broken" not in gaps, "the stale claim is back"
+    assert "Spaces and parentheses are fine" in brief
+
+
+def test_the_agent_brief_is_reachable_from_the_repository_root():
+    """The README tells a reader to point their agent here and say "read AGENTS.md". If the brief
+    is written but never shipped, that sentence sends the agent looking for a file that is not
+    there — which happened: the manifest rows were added with the wrong source path and the export
+    dropped both names silently."""
+    for name in ("AGENTS.md", "CLAUDE.md"):
+        assert (ROOT / name).is_file(), f"{name} must sit at the repository root"
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    assert "AGENTS.md" in readme, "the README must name the brief it tells the reader to invoke"
+
+
+def test_no_document_contradicts_the_corpus_table():
+    """Six independent reviewers found the same defect: the corpus figures drifted across the docs
+    — 88 books in nine places and 89 in four, and a "worst book" number the project's own appendix
+    said was impossible. CONTRIBUTING asks that every number cite its artifact; this makes that
+    mechanical for the handful of figures that describe the corpus as a whole.
+
+    Deliberately narrow. It does not police every number in the docs — "four books over 300 marks"
+    and "107 highlights" in one book are different quantities, not contradictions. It polices the
+    corpus totals, where drift is silent and a reader cannot tell which figure to believe."""
+    table = (ROOT / "docs" / "reference" / "CORPUS.md").read_text(encoding="utf-8")
+    for expected in ("| 88 |", "| 4,425 |", "| 5,225 |", "| 460 |", "| 595 |", "| 5,211 |", "| 21 |"):
+        assert expected in table, f"the corpus table lost {expected}"
+    # values that WOULD contradict the table if any document stated them as a corpus total
+    contradictions = {
+        r"\b89 books\b": "the corpus holds 88 books; 89 is the file count before the membership rule",
+        r"\b490 (?:highlights|marks)\b": "no book has 490; the maxima are 460 highlights and 595 marks",
+        r"\b5,211 highlights\b": "5,211 counts marks in both channels, not e-reader highlights",
+        r"\b88 highlights\b": "88 is a book count",
+    }
+    bad = []
+    for p in sorted(ROOT.rglob("*.md")):
+        if any(x in p.parts for x in (".venv", "out", "fixtures", "__pycache__")) or p.name == "CORPUS.md":
+            continue
+        text = p.read_text(encoding="utf-8", errors="replace")
+        for pattern, why in contradictions.items():
+            for m in re.finditer(pattern, text):
+                line = text[:m.start()].count("\n") + 1
+                bad.append(f"{p.relative_to(ROOT)}:{line} '{m.group(0)}' — {why}")
+    assert not bad, "documents contradict docs/reference/CORPUS.md: " + "; ".join(sorted(set(bad)))
