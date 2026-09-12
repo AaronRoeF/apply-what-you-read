@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import os
 import pathlib
+import re
 import stat
 import subprocess
 
@@ -113,6 +114,60 @@ def test_a_current_application_with_real_quoted_evidence_is_accepted(tmp_path):
     r = _run(tmp_path, _stub(tmp_path, msg, {**GOOD_META, "application_kind": "current",
                                              "evidence": [str(ev)]}))
     assert r.returncode == 0, r.stderr
+
+
+def test_a_vault_under_a_books_directory_still_accepts_the_readers_own_writing(tmp_path):
+    """Security review, finding 5. The pipeline-output check matched the parts of the ABSOLUTE
+    path, so a vault at ~/books/vault or ~/out/vault refused every `current` and `past` lesson
+    forever, and the refusal blamed the reader's own journal for being "something this pipeline
+    wrote". The compound failure is the bad one: with no current application possible, every
+    lesson is hypothetical, every hypothetical scores `unmeasured`, and the kill switch can never
+    fire — the loop degrades to wallpaper with its own off-switch disabled, because of a directory
+    name. The names are the pipeline's and are only meaningful relative to the reader's root."""
+    vault = tmp_path / "books" / "vault"
+    ev = vault / "journal" / "2026-03-11.md"
+    ev.parent.mkdir(parents=True)
+    ev.write_text("the retiring is on the list for this week\n", encoding="utf-8")
+    msg = (GOOD_MSG.replace("WHY HELD: Marked two years ago, never spent since.",
+                            "WHY NOW: The retiring is on the list for this week.")
+                   .replace("Suppose you take ten minutes", "Take ten minutes"))
+    r = _run(tmp_path, _stub(tmp_path, msg, {**GOOD_META, "application_kind": "current",
+                                             "evidence": [str(ev)]}),
+             env_extra={"VAULT": str(vault)})
+    assert r.returncode == 0, r.stdout + r.stderr
+
+
+def test_a_distillation_is_still_refused_when_the_vault_is_under_a_books_directory(tmp_path):
+    """The other half of finding 5: making the check relative must not make it toothless."""
+    vault = tmp_path / "books" / "vault"
+    ev = vault / "distill" / "distill-meditations.md"
+    ev.parent.mkdir(parents=True)
+    ev.write_text("the retiring is on the list for this week\n", encoding="utf-8")
+    msg = (GOOD_MSG.replace("WHY HELD: Marked two years ago, never spent since.",
+                            "WHY NOW: The retiring is on the list for this week.")
+                   .replace("Suppose you take ten minutes", "Take ten minutes"))
+    r = _run(tmp_path, _stub(tmp_path, msg, {**GOOD_META, "application_kind": "current",
+                                             "evidence": [str(ev)]}),
+             env_extra={"VAULT": str(vault)})
+    assert r.returncode != 0
+    assert "something this pipeline wrote" in (r.stdout + r.stderr)
+
+
+def test_the_three_components_agree_on_what_this_pipeline_wrote(tmp_path):
+    """A security reviewer found run.sh refusing derived files, candidates.py refusing them, and
+    adjudicate.py refusing nothing — three components, three answers, and the adjudicator's silence
+    was what let tutor-journal.md corroborate every lesson. The sets are still written twice
+    because run.sh embeds its Python; this asserts they have not drifted again."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "adj", ROOT / "agents" / "tutor" / "adjudicate.py")
+    adj = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(adj)
+    src = (ROOT / "agents" / "tutor" / "run.sh").read_text(encoding="utf-8")
+    m = re.search(r"rel_parts & \{([^}]+)\}", src)
+    assert m, "run.sh no longer has the pipeline-directory check this test exists to pin"
+    in_runner = {x.strip().strip('"') for x in m.group(1).split(",")}
+    assert in_runner == adj.PIPELINE_DIRS, (in_runner, adj.PIPELINE_DIRS)
 
 
 def test_an_unlabelled_hypothetical_is_refused(tmp_path):
@@ -242,6 +297,39 @@ def test_seven_silent_lessons_turn_the_loop_off_loudly(tmp_path):
     assert res["silent_streak"] == 7 and res["kill"]
     out = ADJ.rewrite(led, res)
     assert "status: off" in out and "off_reason:" in out and "wallpaper" in out
+
+
+def test_the_kill_flips_a_status_line_the_reader_has_annotated(tmp_path):
+    """Security review, finding 3 (blocking). The pattern was anchored — `^status:\\s*on\\s*$` — so
+    `status: on   # back on 2026-09-01` did not match. The run printed TUTOR LOOP: OFF, wrote the
+    ledger, and left the frontmatter saying on, and the runner kept sending. The off_reason text
+    itself invites the reader to hand-edit that line, so the annotated form is the expected one,
+    not an exotic one. A kill switch that reports a flip it did not make is the loudest possible
+    lie in the one place this design says must never be quiet."""
+    surf = tmp_path / "w"; surf.mkdir(exist_ok=True)
+    (surf / "unrelated.md").write_text("nothing to do with any of it\n", encoding="utf-8")
+    rows = [[f"2026-03-{i:02d}", f"item {i}", f"Some Work loc {i}00", f"2026-03-{i:02d}", "", "", "", "current"]
+            for i in range(1, 8)]
+    led = _ledger(rows).replace("status: on", "status: on   # turned back on 2026-09-01", 1)
+    res = ADJ.adjudicate(led, [surf], _dt.date(2026, 4, 1))
+    assert res["kill"]
+    out = ADJ.rewrite(led, res)
+    assert "status: off" in out, out[:400]
+    assert not re.search(r"^status:\s*on\b", out, re.M), "the loop is still on after a kill"
+
+
+def test_a_kill_that_cannot_write_the_flip_refuses_rather_than_reporting_it(tmp_path):
+    """The proof, not the substitution: if the frontmatter has no status line at all, the flip
+    cannot land, and the adjudicator must say so instead of printing OFF over a loop that is on."""
+    surf = tmp_path / "w"; surf.mkdir(exist_ok=True)
+    (surf / "unrelated.md").write_text("nothing to do with any of it\n", encoding="utf-8")
+    rows = [[f"2026-03-{i:02d}", f"item {i}", f"Some Work loc {i}00", f"2026-03-{i:02d}", "", "", "", "current"]
+            for i in range(1, 8)]
+    led = _ledger(rows).replace("status: on", "state: on", 1)
+    res = ADJ.adjudicate(led, [surf], _dt.date(2026, 4, 1))
+    assert res["kill"]
+    with pytest.raises(ValueError, match="STILL ON"):
+        ADJ.rewrite(led, res)
 
 
 def test_six_silences_do_not_turn_it_off(tmp_path):

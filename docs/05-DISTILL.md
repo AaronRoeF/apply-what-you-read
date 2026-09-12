@@ -97,7 +97,9 @@ opens while searching `READER_SURFACES`. Nothing else in the vault is sent unles
 reads it. The pipeline through the vault sends nothing anywhere.
 
 The headless runner scopes the agent's tools: `Read` only under this repository, `RG_OUT`,
-`VAULT` and each `READER_SURFACES` directory; `Edit` only under `VAULT/distill/`; `Grep`,
+`VAULT` and each `READER_SURFACES` directory; `Edit` only under `VAULT/distill/`, which is
+the whole of the write grant because an `Edit` path rule covers every file-editing tool,
+creation included, and a path-scoped `Write` rule does not exist; `Grep`,
 `Glob`, `Bash(grep:*)` and `Bash(ls:*)`. It cannot read outside those roots or write anywhere
 else, and your own Claude Code settings are not loaded for the run, so a permissive personal
 config cannot widen that list. Keep `READER_SURFACES` to directories you would show a colleague. The runner kills the

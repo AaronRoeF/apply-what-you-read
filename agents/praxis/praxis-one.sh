@@ -68,12 +68,12 @@ $prompt"
 echo "praxis: proposing candidates…"
 # The proposer may write ONLY its candidate file. It cannot touch the vault, so it cannot mark
 # its own homework even by accident.
-run_agent qualify.md "Write(//$RG_OUT/praxis/**),Edit(//$RG_OUT/praxis/**)" "the qualifier" || exit 1
+run_agent qualify.md "Edit(//$RG_OUT/praxis/**)" "the qualifier" || exit 1
 [ -s "$CAND" ] || { echo "praxis: the qualifier wrote no candidates. An empty proposal and a clean run look identical; treating this as a failure." >&2; exit 1; }
 N=$(grep -c . "$CAND" 2>/dev/null || echo 0)
 echo "praxis: $N candidate(s) proposed — adjudicating (refusal is the default)…"
 
-run_agent adjudicate.md "Write(//$VAULT/praxis/**),Edit(//$VAULT/praxis/**),Write(//$RG_OUT/praxis/**),Edit(//$RG_OUT/praxis/**)" "the adjudicator" || exit 1
+run_agent adjudicate.md "Edit(//$VAULT/praxis/**),Edit(//$RG_OUT/praxis/**)" "the adjudicator" || exit 1
 # The index survives a failed run. It is replaced only when this one produced something, and the
 # previous file is kept beside it until the new one is in place.
 if [ -s "$ADJ_TMP" ]; then

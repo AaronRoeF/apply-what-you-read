@@ -9,7 +9,7 @@ a single membership authority — that keep the derived layers from lying to the
 read them.
 
 Every figure below is a measurement on that one real corpus — the reference corpus: 88
-books, 4,425 highlights, 798 photographed pages — unless a sentence says otherwise. None of
+books, 4,425 highlights, 800 photographed pages — unless a sentence says otherwise. None of
 it is a property of the code; it is what the code found on one library. The public-domain
 fixture in `fixtures/meditations/` is what the quickstart runs on.
 
@@ -156,7 +156,7 @@ reference corpus and live under `reference/`; the quickstart path does not run t
                                      [8] corpus/merge_corpus.py
                                      out/merged/*.json + *.md
                                      88 books / 4,425 highlights
-                                     798 photo pages / 44 typed notes
+                                     800 photo pages / 44 typed notes
                                                   |
                                  +----------------+-----------------+
                                  v                                  v
@@ -441,7 +441,7 @@ key and writes two files per book: a JSON record for machines and a markdown ren
 reading, plus `_manifest.json` over the lot. Books present in only one channel are still
 books.
 
-Measured on `out/merged/`: **88 books, 4,425 highlights, 798 photographed pages, 44 of 44
+Measured on `out/merged/`: **88 books, 4,425 highlights, 800 photographed pages, 44 of 44
 typed notes.** Of those 88, 10 are photo-only, 18 have both channels, and the rest are
 highlight-only.
 

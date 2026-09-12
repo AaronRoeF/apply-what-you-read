@@ -51,6 +51,28 @@ def parse_rows(text: str) -> list[dict]:
     return rows
 
 
+# WHAT THIS PIPELINE WROTE, AND THEREFORE WHAT CANNOT CORROBORATE THE READER. Kept as one
+# constant because the three components that need it had drifted to three different answers:
+# run.sh refused derived files, candidates.py refused them, and this adjudicator refused nothing,
+# so pointing READER_SURFACES at the vault let tutor-journal.md — which holds every lesson
+# verbatim — score every lesson, and the kill switch could never fire. A test asserts run.sh
+# still agrees with this list.
+PIPELINE_DIRS = {"books", "distill", "praxis", "out", "_orphaned"}
+PIPELINE_FILES = {"tutor-journal.md", "tutor-ledger.md"}
+
+
+def is_pipeline_output(p: pathlib.Path, root: pathlib.Path) -> bool:
+    """Is this file something the pipeline produced, rather than something the reader wrote?
+    Judged RELATIVE to the reader's own root, so a vault living under ~/books/ or ~/out/ is not
+    mistaken for the pipeline's own directories."""
+    try:
+        rel = p.resolve().relative_to(root.expanduser().resolve())
+    except (ValueError, OSError):
+        return False
+    return (bool(set(rel.parts[:-1]) & PIPELINE_DIRS)
+            or p.name.startswith("distill-") or p.name in PIPELINE_FILES)
+
+
 def cites(row: dict, surfaces: list[pathlib.Path], since: dt.date) -> str:
     """Did the reader's own writing pick this up? A citation string or a distinctive fragment of
     the item, appearing in a file modified after the lesson was sent."""
@@ -64,6 +86,8 @@ def cites(row: dict, surfaces: list[pathlib.Path], since: dt.date) -> str:
         if not d.exists():
             continue
         for p in d.rglob("*.md"):
+            if is_pipeline_output(p, d):
+                continue
             try:
                 if dt.date.fromtimestamp(p.stat().st_mtime) < since:
                     continue
@@ -125,12 +149,20 @@ def rewrite(text: str, result: dict) -> str:
         cells = [r["date"], r["item"], r["citation"], r["due"], r["edit"], r["opened"], r["outcome"], r["kind"]]
         lines[r["line"]] = "| " + " | ".join(cells) + " |"
     out = "\n".join(lines) + ("\n" if text.endswith("\n") else "")
-    if result["kill"] and re.search(r"^status:\s*on\s*$", out, re.M):
-        out = re.sub(r"^status:\s*on\s*$",
-                     f"status: off\noff_reason: \"{KILL_AFTER} consecutive lessons landed nowhere "
-                     f"(adjudicated {dt.date.today().isoformat()}); the loop turns itself off rather "
-                     f"than becoming wallpaper. Set status back to on when you want it again.\"",
-                     out, count=1, flags=re.M)
+    if result["kill"]:
+        # The anchored pattern this used to carry did not match `status: on   # back on 2026-09-01`,
+        # a line the off_reason text itself invites the reader to write. The run then printed
+        # TUTOR LOOP: OFF, wrote the ledger, and left the frontmatter saying on, so the loop kept
+        # sending. A kill switch that reports a flip it did not make is the loudest possible lie in
+        # the one place this design says must never be quiet. Match the whole line, then PROVE it.
+        replacement = (f"status: off\noff_reason: \"{KILL_AFTER} consecutive lessons landed nowhere "
+                       f"(adjudicated {dt.date.today().isoformat()}); the loop turns itself off rather "
+                       f"than becoming wallpaper. Set status back to on when you want it again.\"")
+        out = re.sub(r"^status:\s*on\b[^\n]*$", lambda _m: replacement, out, count=1, flags=re.M)
+        if not re.search(r"^status:\s*off\b", out, re.M):
+            raise ValueError(
+                "the kill condition fired but `status: off` could not be written to the ledger "
+                "frontmatter, so THE LOOP IS STILL ON. Set `status: off` by hand.")
     return out
 
 
@@ -163,12 +195,25 @@ def main(argv=None) -> int:
               f"measurable.")
     for r in res["resolved_now"]:
         print(f"  {r['outcome']:7s} {r['date']}  {r['item'][:60]}")
-    if res["kill"]:
-        print(f"\n  TUTOR LOOP: OFF — {res['silent_streak']} consecutive lessons landed nowhere.\n"
-              f"  A channel that gets skimmed is a channel where this dies quietly, so it stops\n"
-              f"  instead. Set `status: on` in {ledger} when you want it back.")
     if a.apply:
-        ledger.write_text(rewrite(text, res), encoding="utf-8")
+        try:
+            new = rewrite(text, res)
+        except ValueError as e:
+            print(f"adjudicate: REFUSED — {e}", file=sys.stderr)
+            return 3
+        ledger.write_text(new, encoding="utf-8")
+
+    if res["kill"]:
+        # Only claimed after the write actually happened, so the banner cannot describe a state
+        # the ledger is not in.
+        if a.apply:
+            print(f"\n  TUTOR LOOP: OFF — {res['silent_streak']} consecutive lessons landed nowhere.\n"
+                  f"  A channel that gets skimmed is a channel where this dies quietly, so it stops\n"
+                  f"  instead. Set `status: on` in {ledger} when you want it back.")
+        else:
+            print(f"\n  TUTOR LOOP: WOULD TURN OFF — {res['silent_streak']} consecutive lessons "
+                  f"landed nowhere.\n  Nothing was written; pass --apply to make it so.")
+    if a.apply:
         print(f"  wrote {ledger}")
     else:
         print("  (report only — pass --apply to write the outcomes back)")

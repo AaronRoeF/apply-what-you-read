@@ -36,7 +36,7 @@ failures threw an exception.
 | [reference/AGENT-DESIGNS.md](reference/AGENT-DESIGNS.md) | the Librarian and Tutor design, stated after the corrections — including which parts the project's own evidence invalidated. |
 | [reference/CLASSIFY-PATHS.md](reference/CLASSIFY-PATHS.md) | you are choosing between the API and the agent path for cataloguing page marks. |
 
-Numbers throughout are measured against one real corpus (88 books, 4,425 highlights, 798
+Numbers throughout are measured against one real corpus (88 books, 4,425 highlights, 800
 photographed pages) and traceable to the pipeline's own artifacts. Where a figure was
 invalidated it is marked void rather than deleted; where something is unbuilt it says so.
 

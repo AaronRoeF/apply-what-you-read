@@ -1,6 +1,6 @@
 # Verifying agent output you cannot read yourself
 
-This pipeline, run against one real corpus — 88 books, 4,425 e-reader highlights, 798
+This pipeline, run against one real corpus — 88 books, 4,425 e-reader highlights, 800
 photographed pages — machine-read roughly 3,400 images and 143 documents, then had agents
 write dozens of analyses on top of that text. Nobody read the inputs. Nobody read most of the
 outputs. This document is the methodology for trusting any of it anyway: what to measure,
@@ -176,7 +176,7 @@ claim about a space saving is a different claim than it appears to be.
 
 When this document was first written, the corpus of record held 87 merged book files
 carrying 4,423 of the 4,425 crawled highlights, while recomputing from
-`out/merged/_manifest.json` gave **88 rows, 4,425 highlights, 798 photographed pages, 44
+`out/merged/_manifest.json` gave **88 rows, 4,425 highlights, 800 photographed pages, 44
 typed notes.**
 
 The two-highlight and one-book gaps were the same defect: two distinct works normalised to

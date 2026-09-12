@@ -1,5 +1,12 @@
 # apply-what-you-read
 
+You highlight books. This turns those highlights into one short lesson a day: a passage you
+marked, what its author was actually arguing, one concrete thing to do about it this week, and a
+citation you can open in ten seconds to check it. It runs on your own machine against your own
+library, and it also tells you which of your books you highlighted and then never used again.
+
+That is the whole of it. The rest of this page is why it is worth having.
+
 **Name three ideas from the books you read last year that changed how you work.**
 
 Most people who read a great deal cannot, and it is not a memory problem. You already did the
@@ -14,8 +21,8 @@ the reader had written since. Every figure in this document, and where it came f
 | | |
 |---|---|
 | marks whose words appear nowhere in their own writing | **5,189** |
-| marks whose words appear somewhere | **21** |
-| of those, ideas that had genuinely travelled, read by hand | **about 5** |
+| marks whose words appear somewhere | **22** (21 worth a second look, 1 too common to mean anything) |
+| of those 21, ideas that had genuinely travelled, read by hand | **about 5** |
 
 Take the instrument's limits seriously, because they cut both ways. Searching for exact phrases
 cannot see an idea you absorbed and put in your own words, or one that changed a decision you

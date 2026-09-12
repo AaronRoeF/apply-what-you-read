@@ -76,11 +76,15 @@ $CONTEXT_TEXT
 $PROMPT"
 
 # Read only what the job needs; write only the distillation; no other shell.
-# Write AND Edit, both scoped to the distillation directory: the output file does not exist yet,
-# and creating a file is Write, not Edit. Denying Write globally while granting only Edit left the
-# agent unable to perform the single action this runner exists to make it perform — a gap the stub
-# in the tests could not show, because a stub writes with a shell redirect and never asks.
-TOOLS="Read(//$ROOT/**),Read(//$RG_OUT/**),Read(//$VAULT/**),Write(//$VAULT/distill/**),Edit(//$VAULT/distill/**),Bash(grep:*),Bash(ls:*),Grep,Glob"
+# ONE Edit rule, scoped to the distillation directory, and that is enough: an Edit path rule covers
+# every file-editing tool, Write included. There is no such thing as a path-scoped Write rule —
+# `Write(//dir/**)` is silently inert and the CLI says so on stderr. An earlier version of this
+# runner granted one anyway, alongside a comment claiming the output file did not exist yet so
+# Write was required. That diagnosis was wrong. What had blocked the agent was a global `Write` in
+# --disallowedTools, because deny beats allow; removing it is what fixed it. The wrong explanation
+# survived review because the grant it justified was harmless, and a public teaching repo that
+# ships a false permission model teaches it to everyone who copies this file.
+TOOLS="Read(//$ROOT/**),Read(//$RG_OUT/**),Read(//$VAULT/**),Edit(//$VAULT/distill/**),Bash(grep:*),Bash(ls:*),Grep,Glob"
 IFS=':' read -r -a SURF <<< "${READER_SURFACES:-}"
 for d in "${SURF[@]:-}"; do [ -n "$d" ] && TOOLS="$TOOLS,Read(//$d/**)"; done
 

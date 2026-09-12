@@ -120,16 +120,19 @@ def test_distill_one_success_prints_no_job_control_noise(tmp_path, merged):
 
 
 def test_the_runner_grants_the_verb_that_creates_a_file():
-    """Review, engineering lens: the grant allowed Edit and denied Write, and the output file does
-    not exist when the agent starts. Creating a file is Write. Every test here drives a stub that
-    writes with a shell redirect and never asks permission, so no test could see it — the argv is
-    the only place this is checkable without a live run."""
+    """The agent must be able to create its output file, and the grant that lets it must be a rule
+    the CLI actually honours. An earlier version of this test asserted a scoped `Write(//dir/**)`
+    rule, which does not exist: the CLI prints "is not matched by file permission checks — only
+    Edit(path) rules are" and ignores it. An Edit path rule covers every file-editing tool. What
+    had actually blocked creation was a global Write in --disallowedTools, because deny beats
+    allow. A security reviewer proved all of this against the live CLI; every stub here writes with
+    a shell redirect and never asks permission, so the argv is the only place it is checkable."""
     src = (ROOT / "agents" / "distill" / "distill-one.sh").read_text(encoding="utf-8")
     tools = re.search(r'^TOOLS="([^"]+)"', src, re.M).group(1)
-    assert "Write(//$VAULT/distill/**)" in tools, tools
     assert "Edit(//$VAULT/distill/**)" in tools, tools
+    assert "Write(" not in tools, f"a path-scoped Write rule is inert and the CLI warns on it: {tools}"
     denied = re.search(r'--disallowedTools "([^"]+)"', src).group(1)
     assert "Write" not in denied.split(","), f"Write is denied globally while being required: {denied}"
     for scope in ("Read(//$ROOT/**)", "Read(//$VAULT/**)"):
         assert scope in tools
-    assert "Write(//" in tools and tools.count("Write(") == 1, "write stays scoped to one directory"
+    assert tools.count("Edit(") == 1, "editing stays scoped to one directory"

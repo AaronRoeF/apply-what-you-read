@@ -2,7 +2,7 @@
 
 This is a catalogue of the failure modes that actually occurred while building a personal-archive
 pipeline against one real corpus — 2,352 notes, 3,372 OCR'd images, 143 extracted documents,
-798 photographed book pages, and 4,425 e-reader highlights across 78 annotated titles (88 books
+800 photographed book pages, and 4,425 e-reader highlights across 78 annotated titles (88 books
 in the merged corpus) — together with the symptom, the root cause, the thing that detected it,
 and the fix. Almost none of them threw an exception. The pipeline's characteristic failure was to return a
 smaller, cleaner, more confident answer than the truth, and to keep doing so until something

@@ -6,7 +6,7 @@ evidence forced each call. It exists because several of the most useful outcomes
 you fork this repo, the reversals are the part worth reading first, because they are the
 places where an obvious-looking feature turned out to be a net negative and the numbers say
 why. Every figure below can be followed back to the pipeline's own output or to the project
-record, and all of it was measured on one real corpus (88 books, 4,425 highlights, 798
+record, and all of it was measured on one real corpus (88 books, 4,425 highlights, 800
 photographed pages); where a number was later invalidated, it is marked as invalid rather
 than deleted.
 
@@ -310,7 +310,7 @@ Two observations from the run that generalise:
 The ranking that produced those candidates rested on an inference that does not hold:
 **rarity was being read as significance.**
 
-The corpus contains 44 typed notes across 4,425 marks — about 1%. That was treated as
+The corpus contains 44 typed notes across 4,425 e-reader highlights — about 1%. That was treated as
 evidence that typed notes are where the reader's most considered thinking lives. The simpler
 explanation is **input friction**: typing on an e-reader is annoying. Rarity measures the
 keyboard, not the thought. (Measured across the merged manifest: 69 of 88 books contain zero

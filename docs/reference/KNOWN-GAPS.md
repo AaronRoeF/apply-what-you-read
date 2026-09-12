@@ -53,6 +53,22 @@ work; the rest were phrases of the English language occurring in both places. `u
 robust half. Treat a `candidate` as a question for the Praxis adjudicator, never as a finding. The
 numbers and the reasoning are in [08-LIBRARIAN](../08-LIBRARIAN.md).
 
+## Three ways a derived file can still pass as your own writing
+
+The Tutor refuses to treat anything this pipeline produced as evidence of your life, and a security
+reviewer confirmed the check holds against symlinks, `..` traversal, and a `distill/` directory that
+is itself a symlink. Three routes remain open, and all three need a filesystem or configuration
+action that neither agent can perform, because Write is scoped and no shell grant can make links:
+
+- a **hard link** out of `distill/` into your writing directory is accepted, because resolving a
+  path cannot see it;
+- a file named `Distill-something.md` outside `distill/` is accepted, because the name check is
+  case-sensitive;
+- setting `RG_OUT` to a directory **inside** your vault that is not called `out` lets the agent's
+  own `message.txt` count as evidence, and it can then quote itself past the four-word check.
+
+Keep `RG_OUT` outside the vault, which is the default, and none of the three arises.
+
 ## Photographs are a biased sample, and so is any single channel
 
 A pass built on photographed pages alone concluded a reader had never engaged with a chapter they

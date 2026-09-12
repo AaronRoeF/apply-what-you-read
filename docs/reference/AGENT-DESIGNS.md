@@ -19,7 +19,7 @@ and its public port (`agents/tutor/`) lands in v0.2: *Proven, landing*. The Libr
 refutation protocol has run once, by hand, on the real corpus; its automated corroboration
 matcher (`agents/librarian/candidates.py`) is *Designed*, for v0.3. The labels are the ones in
 the status table in the README. The substrate both agents consume is complete and verified,
-and every number below was measured on one real corpus (88 books, 5,211 marks, 798
+and every number below was measured on one real corpus (88 books, 5,225 marks, 800
 photographed pages).
 
 ---
@@ -102,7 +102,7 @@ classes rather than within them.
 
 | Class | What it is | Measured |
 |---|---|---|
-| **Source material** | passages the reader marked — other people's ideas they judged worth keeping | 4,425 span-level highlights + 798 photographed pages across 88 merged book files |
+| **Source material** | passages the reader marked — other people's ideas they judged worth keeping | 4,425 span-level highlights + 800 photographed pages across 88 merged book files |
 
 > The 4,425 figure throughout this document is the e-reader channel alone, at the time of that analysis. Elsewhere you will see 5,211, which is the current corpus with photographed pages included. Both are true of different moments; neither supersedes the other.
 
@@ -315,17 +315,20 @@ to be.
 
 ## Feedback and the kill condition
 
-Outcomes are scored on two passive channels, and never by asking the reader to click:
+Outcomes are scored on passive channels, and never by asking the reader to click:
 
-- **`edit`** — a downstream edit citing the lesson within 14 days. Scored only on `current`
-  rows: a `past` or `hypothetical` lesson can produce no downstream edit, so `edit` is `n/a`
-  there and the second channel alone decides.
-- **`opened`** — the cited note surfacing in the vault's recent files.
+- **`edit`** — a downstream edit citing the lesson within 14 days. This is the one channel that
+  is built. It is scored only on `current` rows, because a `past` or `hypothetical` lesson can
+  produce no downstream edit.
+- **`opened`** — the cited note surfacing in the vault's recent files. **Designed and not built.**
+  The ledger keeps the column empty rather than pretending, and nothing reads it.
 
-A row is *resolved* once its check-due date has passed and both channels are filled; a
-resolved row with neither hit is `silent`. Downweight what stays silent.
+A row is *resolved* once its check-due date has passed and the built channel is filled; a resolved
+row with no hit is `silent`. A lesson the built channel cannot score — a `past` or `hypothetical`
+application, or any lesson when no writing directory was given — is `unmeasured`, not silent, and
+does not count toward the kill condition below. Downweight what stays silent.
 
-**Explicit kill condition: seven consecutive resolved rows silent on both channels ⇒
+**Explicit kill condition: seven consecutive resolved rows silent ⇒
 `status: off` in the ledger frontmatter.** It is set loudly — the reason goes in the
 frontmatter, the OFF line prints at the top of the weekly adjudication and every run after it
 — and it stays off until the reader flips it back. A tutor nobody reads is worse than none,
@@ -357,7 +360,7 @@ below was measured on one real corpus:
 | Substrate | State |
 |---|---|
 | Imported note corpus | 2,352 files, verified, 0 broken embeds |
-| Merged book corpus | 88 book files, 5,211 marks, 44 typed notes |
+| Merged book corpus | 88 book files, 5,225 marks, 44 typed notes |
 | Vault book nodes | 88, 1:1 with the corpus, zero orphans either direction |
 | Reserved `related:` field | present on every node, preserved across rebuilds, empty until the Librarian lands (v0.3) |
 | Distillations | every book distilled (88 of 88); 28 carry a hand-run corroboration verdict |

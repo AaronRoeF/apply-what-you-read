@@ -72,7 +72,7 @@ reasonable contribution.
 **Why is `kindle_colors` empty?** `My Clippings.txt` carries no colour. The app's Export Notes
 HTML and a Readwise CSV do; parse one of those (or both — sources merge and dedupe).
 
-**How big can this get?** The reference corpus is 88 books, 4,425 highlights and 798
+**How big can this get?** The reference corpus is 88 books, 4,425 highlights and 800
 photographed pages; every stage is a linear pass over files and the whole rebuild takes
 seconds without OCR. OCR is the slow part: Apple Vision runs at a few images per second.
 
