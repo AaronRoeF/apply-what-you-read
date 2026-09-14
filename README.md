@@ -278,6 +278,18 @@ company product — this is one person's reading system, published so it can be 
 | [reference/KNOWN-GAPS](docs/reference/KNOWN-GAPS.md) | what it does not do, or does not do reliably — including where a guard is a floor rather than a proof |
 | [reference/AGENTS](docs/reference/AGENT-DESIGNS.md) | the Librarian and the Tutor, designed after the corrections |
 
+## Where this sits
+
+The same shape, applied to different material. Each stands alone.
+
+| | |
+|---|---|
+| **[exo](https://github.com/AaronRoeF/exo)** | The environment this grew up inside — skills, hooks, slash commands and a plain-text knowledge base that compounds across sessions. The vault here is the same idea, narrowed to books. |
+| **[exo-mesh](https://github.com/AaronRoeF/exo-mesh)** | The same local-first join applied to people instead of books: your mail, calendar, iMessage and contacts resolved into one record per person, on your own disk. |
+| **[claude-code-patterns](https://github.com/AaronRoeF/claude-code-patterns)** | The patterns behind both — including the knowledge-base pattern the vault here is built on. |
+
+---
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Short version: `bash tests/run.sh` passes,
