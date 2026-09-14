@@ -17,25 +17,25 @@ Most people who read a great deal cannot, and it is not a memory problem. You al
 hard part: you noticed the passage was important and you marked it. Then the book closed and the
 mark stopped existing.
 
-Here is one attempt to measure it. One real library — 88 books, 5,211 marked passages from an
-e-reader and photographed pages — searched word-for-word against 2,235 files the reader had
-written since:
+Here is one attempt to measure it, on one real library. Take every passage that reader had ever
+marked — 5,211 of them, across 88 books, from an e-reader and from photographed pages. Then search
+all 5,211, word for word, against the 2,235 files the same person had written since: notes, plans,
+documents, anything.
 
-| | |
-|---|---|
-| marks whose words appear nowhere in their own writing | **5,189** |
-| marks whose words appear somewhere | **22** |
-| of those, ideas that had genuinely travelled, read by hand | **about 5** |
+**5,211 passages went in.**
+**5,189 of them appear nowhere in that writing at all.**
+**22 turned up somewhere.** A person then read those 22 by eye, and **about 5** were a real reuse
+rather than a coincidence of ordinary words.
 
-The instrument is literal and cuts both ways: it cannot see an idea you absorbed and rephrased, so
-the true figure is kinder than 5,189 — and it cannot tell reuse from coincidence, which is why 22
-becomes about five once a person reads them. Sources and the tightening that failed:
+The instrument is literal, and it cuts both ways. It cannot see an idea you absorbed and put in
+your own words, or one that changed a decision you never wrote down — so the real figure is kinder
+than 5,189. Sources, and the tightening that did not work:
 [reference/CORPUS](docs/reference/CORPUS.md), [08-LIBRARIAN](docs/08-LIBRARIAN.md).
 
 What survives the caveats is still stark. The most-marked book in that library carries 595 marked
 passages and not one of them turns up anywhere.
 
-**That table is not research somebody did about reading. It is output.** The matcher that produced
+**Those numbers are not research somebody did about reading. They are output.** The matcher that produced
 it ships here — `agents/librarian/candidates.py` — and runs against your library, not that one.
 Most people guess they are not applying what they read. Almost nobody has a figure. You can have
 one before lunch.
@@ -44,6 +44,12 @@ one before lunch.
 > is a working brief: the five things to ask you first, the exact ten-step sequence, the decisions
 > already settled, and the mistakes that otherwise cost a session. It runs the project; this page
 > explains why the project exists.
+
+## IMPORTANT NOTE ON GOVERNANCE AND SECURITY
+
+I'm leaving out big parts of my implementation because I'm not interested in disclosing all the specifics of my security and governance setup. You can see parts of what I'm doing here: agentrust-io.com if you're interested. And generally assume this is a project I'm sharing, not a product. I hope you get value. Enjoy! 
+
+---
 
 ## What this is, honestly, before you read further
 
