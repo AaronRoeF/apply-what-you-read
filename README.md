@@ -109,76 +109,75 @@ quoting them.
 
 ## Three worked examples, so you can see the shape
 
-Every name, calendar entry and situation below is invented. The books are real and the citations
-resolve; the lives they land in do not exist. That is also how the repository's own fixture works —
-a public-domain book, so the whole pipeline can be watched end to end without anyone's library.
+The books are real ones off a real shelf. **The lives are not:** every name, meeting and situation
+below is invented, and the locations are illustrative rather than transcribed — the running system
+emits the verbatim span with its real location and highlight colour, which you can watch it do
+against the public-domain book that ships in this repository.
 
-**One. The calendar says what tomorrow is. Your marks say what to bring to it.**
+**One — the feedback you were about to give, inverted.**
 
-Tomorrow, 09:00 — *Quarterly review with Priya Shah*. Recurring, eleven months running.
-
-```
-APPLY WHAT YOU READ LESSON
-
-HELD: "it is in thy power to retire into thyself, and to be at rest" — Meditations, loc 269, 🩷.
-Marcus is arguing that the retreat people look for in the countryside is available at any moment,
-and that going looking for it elsewhere is itself the avoidance.
-
-WHY HELD: Marked two years ago, never spent since.
-
-APPLY: Suppose you take ten minutes before the quarterly review tomorrow, door shut, no inbox —
-and decide what you actually want out of it before anyone else fills the hour for you.
-
-(citation: Meditations loc 269 🩷)
-```
-
-The lesson did not know about the meeting. The *timing* did. One idea you already decided was
-worth keeping, handed back on the morning it is usable.
-
-**Two. Conventional wisdom is cheap. A passage you marked yourself is not.**
-
-Next week, 14:00 — *Acme Robotics — first call with their new VP of Engineering*.
-
-Everyone knows "listen before you change things." It is advice, it is free, and it changes nothing.
-What is different is a passage **you** marked, in your own copy, at a moment when you thought it
-mattered — Michael Watkins on the first ninety days, on negotiating expectations early rather than
-inheriting someone else's. You highlighted it. You have not looked at it since.
+Tomorrow, 10:30 — *1:1 with Jordan Rivera*. You have been putting off a hard conversation for three
+weeks.
 
 ```
 APPLY WHAT YOU READ LESSON
 
-HELD: The First 90 Days, loc 531 🟡 — on establishing what success looks like with your
-counterpart before the work starts, rather than discovering the mismatch at the review.
+HELD: Radical Candor — Kim Scott, on soliciting criticism before you hand any out: the fastest
+way to make feedback survivable is to be visibly bad at receiving it first, in public, from the
+person you are about to give it to.
 
-WHY HELD: Marked when you were the one being onboarded. Never applied from the other side.
+WHY HELD: Marked when you were preparing a different hard conversation. Never spent.
 
-APPLY: Suppose you spend the first ten minutes of the Acme call asking what a good first
-quarter looks like to them, and write the answer down where you will both see it again.
+APPLY: Suppose you open tomorrow by asking Jordan for one thing you are doing that makes their
+job harder — and then say nothing at all until they actually answer.
 
-(citation: The First 90 Days loc 531 🟡)
+(citation: Radical Candor, 🟡)
 ```
 
-**Three. The most important output is the one where it refuses.**
+The lesson did not know the conversation was hard. It knew you marked that passage and never
+used it, and that a 1:1 was the next place it could possibly apply.
 
-Thursday, 11:00 — *Board prep*.
+**Two — the deal that looks fine because only one person is in the room.**
 
-An obvious move here is to reach for a marked passage about decision-making under uncertainty and
-staple it to the meeting. Praxis will not do it. The proposer offers the match; the skeptic asks
-what it would actually change about Thursday, and a passage that produces no different action gets
-**rejected**, with the reason recorded:
+Thursday, 15:00 — *Acme Robotics — renewal forecast call*. Eleven months of meetings, always the
+same one attendee.
+
+```
+APPLY WHAT YOU READ LESSON
+
+HELD: The Qualified Sales Leader — John McMahon, on champions: a champion who cannot get you to
+the person who signs is not a champion, however much they like you.
+
+WHY HELD: Marked two quarters ago. The note you left on it said "check this against the pipeline."
+You did not.
+
+APPLY: Suppose that before Thursday you write down who signs at Acme, and if the honest answer is
+"I don't know", that is the call — not the renewal.
+
+(citation: The Qualified Sales Leader, 🟡)
+```
+
+**Three — the most important output is the one where it refuses.**
+
+Friday, 11:00 — *Board prep*.
+
+The obvious move is to reach for something marked about decision-making and staple it to the
+meeting. Praxis will not. The proposer offers the match; the skeptic asks what it would actually
+change about Friday, and a passage that produces no different action is **rejected**, with the
+reason recorded:
 
 ```
 PRAXIS — proposal rejected
 
-CANDIDATE: Thinking, Fast and Slow, loc 1,204 — on base rates.
-PROPOSED FOR: Thursday board prep.
+CANDIDATE: Thinking, Fast and Slow — Daniel Kahneman, on base rates.
+PROPOSED FOR: Friday board prep.
 SKEPTIC: Refused. The passage is about estimating an unknown probability. Nothing in the
 proposal names a number that would change, or a decision that would go the other way.
 Generic relevance is not application.
 ```
 
-A tool that connects any book to any meeting is a horoscope. **The refusal is the feature** — it
-is what makes the lessons that do arrive worth reading, and it is the part most worth stealing
+A tool that can connect any book to any meeting is a horoscope. **The refusal is the feature** — it
+is what makes the lessons that do arrive worth opening, and it is the part most worth stealing
 whatever else you take from here.
 
 ## What it costs to try
