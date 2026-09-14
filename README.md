@@ -17,28 +17,27 @@ Most people who read a great deal cannot, and it is not a memory problem. You al
 hard part: you noticed the passage was important and you marked it. Then the book closed and the
 mark stopped existing.
 
-Here is one attempt to measure it, on one real library. Take every passage that reader had ever
-marked — 5,211 of them, across 88 books, from an e-reader and from photographed pages. Then search
-all 5,211, word for word, against the 2,235 files the same person had written since: notes, plans,
-documents, anything.
+So I measured it on mine. 88 books. 5,211 passages marked over years. Then I searched every one of
+those 5,211, word for word, against the 2,235 files I'd written since — notes, plans, documents,
+anything.
 
-**5,211 passages went in.**
-**5,189 of them appear nowhere in that writing at all.**
-**22 turned up somewhere.** A person then read those 22 by eye, and **about 5** were a real reuse
-rather than a coincidence of ordinary words.
+**5,189 of them don't appear in that writing anywhere.** Twenty-two turned up. I read those
+twenty-two by eye, and about five were a real reuse rather than two sentences happening to share
+ordinary words.
 
-The instrument is literal, and it cuts both ways. It cannot see an idea you absorbed and put in
-your own words, or one that changed a decision you never wrote down — so the real figure is kinder
-than 5,189. Sources, and the tightening that did not work:
+The search is literal, so it's wrong in both directions. It can't see an idea you absorbed and put
+in your own words, or one that changed a decision you never wrote down, which means the true number
+is kinder than 5,189. It also can't tell reuse from coincidence, which is why twenty-two came down
+to five. Sources, and the tightening that didn't work:
 [reference/CORPUS](docs/reference/CORPUS.md), [08-LIBRARIAN](docs/08-LIBRARIAN.md).
 
-What survives the caveats is still stark. The most-marked book in that library carries 595 marked
-passages and not one of them turns up anywhere.
+The caveats don't rescue it. My most-marked book carries 595 marked passages, and not one of them
+turns up anywhere.
 
-**Those numbers are not research somebody did about reading. They are output.** The matcher that produced
-it ships here — `agents/librarian/candidates.py` — and runs against your library, not that one.
-Most people guess they are not applying what they read. Almost nobody has a figure. You can have
-one before lunch.
+**Those numbers aren't research somebody did about reading. They're output.** The matcher that produced them
+ships here, in `agents/librarian/candidates.py`, and it runs against your library instead of mine.
+Most people suspect they aren't applying what they read. Almost nobody has a number. You can have
+yours before lunch.
 
 > **Pointing an agent at this?** Send it to **[AGENTS.md](AGENTS.md)** instead of here. That file
 > is a working brief: the five things to ask you first, the exact ten-step sequence, the decisions
@@ -51,71 +50,41 @@ I'm leaving out big parts of my implementation because I'm not interested in dis
 
 ---
 
-## What this is, honestly, before you read further
+## What this is, before you read further
 
-This is not a packaged product and it is not trying to become one. It is a working project, built
-for one reader's shelf, published because several of its parts are worth borrowing — or stealing
-outright — whether or not you ever run the whole thing.
+It's not a packaged product and it isn't trying to become one. It's a working project, built for
+my own shelf, published because a few of its parts are worth borrowing — or stealing outright —
+whether or not you ever run the whole thing.
 
-The parts I would steal, if I were you:
+The parts I'd steal, if I were you:
 
-**A skeptic that refuses by default.** Praxis is a proposer and then a critic whose job is to say
-no. Every tool in this category generates confident, plausible output; almost none of them ship
-something whose success condition is rejection. See [06-PRAXIS](docs/06-PRAXIS.md).
+**A skeptic that refuses by default.** Praxis proposes, then a critic tries to kill the proposal.
+Every tool in this category generates confident, plausible output. Almost none of them ship
+something whose job is to say no. [06-PRAXIS](docs/06-PRAXIS.md).
 
-**A citation contract that actually resolves.** Every lesson points at the exact span it came from,
-so you can call its bluff in ten seconds. A resolving pointer is not the same as a supported claim,
-and the difference is enforced in code rather than promised in a prompt.
+**A citation contract that resolves.** Every lesson points at the exact span it came from, so you
+can call its bluff in ten seconds. A pointer that resolves isn't the same as a claim that's
+supported, and the difference is enforced in code, not promised in a prompt.
 
-**A feature documented because it was refused.** The cross-book Librarian is specified, argued, and
-deliberately unbuilt — the premise came out refuted 27 to 1, and
-[08-LIBRARIAN](docs/08-LIBRARIAN.md) carries the score against it. The tightening that did not work
-is written up too.
+**A feature documented because I refused to build it.** The cross-book Librarian is specified,
+argued, and deliberately unbuilt. The premise came out refuted 27 to 1, and
+[08-LIBRARIAN](docs/08-LIBRARIAN.md) publishes the score against it. So is the tightening that
+didn't work.
 
 **Local OCR of things that were never digital.** Pen marks, brackets, marginalia, a filled-in
-worksheet, a book you only ever read on paper — Apple Vision on your own machine, no network, no
+worksheet, a book you only ever read on paper. Apple Vision on your own machine — no network, no
 API key.
 
-**What I actually want back is feedback.** Not stars, not adoption. Whether the skeptic refuses the
-right things, whether the citation floor holds on a library that is not mine, whether the Librarian
-number means anything on someone else's shelf. Open an issue and tell me where it is wrong — that
-is the contribution this needs most.
-
-## Tomorrow morning, one marked passage comes back to you
-
-Tomorrow morning, one passage you marked arrives — with what its author was actually arguing,
-one concrete thing to do about it this week, and a citation you can open in ten seconds to check
-that the whole thing is real.
-
-```
-APPLY WHAT YOU READ LESSON
-
-HELD: "it is in thy power to retire into thyself, and to be at rest" — Meditations, loc 269, 🩷.
-Marcus is arguing that the retreat people look for in the countryside is available at any moment,
-and that going looking for it elsewhere is itself the avoidance.
-
-WHY HELD: Marked two years ago, never spent since.
-
-APPLY: Suppose you take ten minutes before the first meeting tomorrow, door shut, no inbox.
-
-(citation: Meditations loc 269 🩷)
-```
-
-Not a summary. Not a flashcard. One idea you already decided was worth keeping, handed back at a
-moment when you can use it, in a channel you already open.
-
-**It also ranks your library by what you appear never to have used.** The same search, inverted.
-On the reference library the top of that list held four books with over 300 marks each and no
-verbatim reuse anywhere at all. Read it as a list of places to look, not a verdict — the instrument is
-literal, and you will find at least one book on it whose ideas you use every week without ever
-quoting them.
+What I want back is feedback, not stars. Whether the skeptic refuses the right things. Whether the
+citation floor holds on a library that isn't mine. Whether the Librarian number means anything on
+someone else's shelf. Open an issue and tell me where it's wrong.
 
 ## Three worked examples, so you can see the shape
 
-The books are real ones off a real shelf. **The lives are not:** every name, meeting and situation
-below is invented, and the locations are illustrative rather than transcribed — the running system
-emits the verbatim span with its real location and highlight colour, which you can watch it do
-against the public-domain book that ships in this repository.
+The books are off my shelf. The lives aren't. Every name, meeting and situation below is made up,
+and the locations are illustrative rather than transcribed — the running system emits the verbatim
+span with its real location and colour, and you can watch it do that against the public-domain book
+that ships here.
 
 **One — the feedback you were about to give, inverted.**
 
@@ -137,8 +106,8 @@ job harder — and then say nothing at all until they actually answer.
 (citation: Radical Candor, 🟡)
 ```
 
-The lesson did not know the conversation was hard. It knew you marked that passage and never
-used it, and that a 1:1 was the next place it could possibly apply.
+The lesson didn't know the conversation was hard. It knew you'd marked that passage and never
+spent it, and that a 1:1 was the next place it could land.
 
 **Two — the deal that looks fine because only one person is in the room.**
 
@@ -164,10 +133,9 @@ APPLY: Suppose that before Thursday you write down who signs at Acme, and if the
 
 Friday, 11:00 — *Board prep*.
 
-The obvious move is to reach for something marked about decision-making and staple it to the
-meeting. Praxis will not. The proposer offers the match; the skeptic asks what it would actually
-change about Friday, and a passage that produces no different action is **rejected**, with the
-reason recorded:
+The obvious move is to grab something marked about decision-making and staple it to the meeting.
+Praxis won't. The proposer offers the match, the skeptic asks what it would change about Friday,
+and a passage that changes nothing gets **rejected**, with the reason written down:
 
 ```
 PRAXIS — proposal rejected
@@ -179,9 +147,9 @@ proposal names a number that would change, or a decision that would go the other
 Generic relevance is not application.
 ```
 
-A tool that can connect any book to any meeting is a horoscope. **The refusal is the feature** — it
-is what makes the lessons that do arrive worth opening, and it is the part most worth stealing
-whatever else you take from here.
+A tool that can connect any book to any meeting is a horoscope. **The refusal is the feature.**
+It's what makes the lessons that do arrive worth opening, and it's the part most worth stealing
+whatever else you take.
 
 ## What it costs to try
 
