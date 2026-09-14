@@ -17,36 +17,33 @@ Most people who read a great deal cannot, and it is not a memory problem. You al
 hard part: you noticed the passage was important and you marked it. Then the book closed and the
 mark stopped existing.
 
-Here is one attempt to measure it. One real library: 88 books and 5,211 marked passages —
-highlights from an e-reader plus photographed pages — searched word-for-word against 2,235 files
-the reader had written since. Every figure in this document, and where it came from, is in
-[reference/CORPUS](docs/reference/CORPUS.md).
+Here is one attempt to measure it. One real library — 88 books, 5,211 marked passages from an
+e-reader and photographed pages — searched word-for-word against 2,235 files the reader had
+written since:
 
 | | |
 |---|---|
 | marks whose words appear nowhere in their own writing | **5,189** |
-| marks whose words appear somewhere | **22** (21 worth a second look, 1 too common to mean anything) |
-| of those 21, ideas that had genuinely travelled, read by hand | **about 5** |
+| marks whose words appear somewhere | **22** |
+| of those, ideas that had genuinely travelled, read by hand | **about 5** |
 
-Take the instrument's limits seriously, because they cut both ways. Searching for exact phrases
-cannot see an idea you absorbed and put in your own words, or one that changed a decision you
-never wrote down — so the true figure is kinder than 5,189. It also cannot tell a real reuse from
-a coincidence of the language, which is why 21 becomes about five once a person reads them. The
-project's own docs say this at more length in [08-LIBRARIAN](docs/08-LIBRARIAN.md), including the
-tightening that did not work.
+The instrument is literal and cuts both ways: it cannot see an idea you absorbed and rephrased, so
+the true figure is kinder than 5,189 — and it cannot tell reuse from coincidence, which is why 22
+becomes about five once a person reads them. Sources and the tightening that failed:
+[reference/CORPUS](docs/reference/CORPUS.md), [08-LIBRARIAN](docs/08-LIBRARIAN.md).
 
 What survives the caveats is still stark. The most-marked book in that library carries 595 marked
-passages and not one of them turns up anywhere. The library is a serious one, marked carefully over
-years, by someone who reads more than most people you know.
+passages and not one of them turns up anywhere.
 
-**That table is not research somebody did about reading. It is output.** The matcher that
-produced it ships in this repository — `agents/librarian/candidates.py` — and it runs against
-your library, not that one. Point it at your own highlights and your own writing and it will
-hand you your own number, with the same caveats attached and the same honesty about what exact
-phrase matching cannot see.
-
+**That table is not research somebody did about reading. It is output.** The matcher that produced
+it ships here — `agents/librarian/candidates.py` — and runs against your library, not that one.
 Most people guess they are not applying what they read. Almost nobody has a figure. You can have
-one before lunch, and it is the most useful uncomfortable thing in here.
+one before lunch.
+
+> **Pointing an agent at this?** Send it to **[AGENTS.md](AGENTS.md)** instead of here. That file
+> is a working brief: the five things to ask you first, the exact ten-step sequence, the decisions
+> already settled, and the mistakes that otherwise cost a session. It runs the project; this page
+> explains why the project exists.
 
 ## What this is, honestly, before you read further
 
@@ -233,13 +230,12 @@ and every later stage reads that corpus and cites what it used. No stage infers 
 capture  →  normalize  →  merge  →  vault  →  distill  →  Praxis  →  Tutor  →  Librarian
 ```
 
-Your marks arrive through three channels, merged into one corpus:
-
-| channel | what it captures | how |
-|---|---|---|
-| **e-reader highlights** | exact span text, colour, page/location, typed notes | `My Clippings.txt` from the device, the app's *Export Notes* HTML, a Readwise CSV — or, for providers with no export, a reference crawler of your own notebook web page (the page where your provider shows you your highlights, v0.3) |
-| **photographed pages** | pen marks, brackets, marginalia, filled-in worksheets, any book never read on a screen | local OCR (Apple Vision via PyObjC) — no network, no API key; a stub engine elsewhere |
-| **an Apple Notes folder** (v0.2) | everything you keep in one Notes folder: typed text, photographed pages, and Apple Pencil handwriting | an exporter reads the Notes database read-only and carries the text Apple already recognised — its own OCR of each photo and the stroke recogniser's text for handwriting, which beats image OCR on the same page — into the photographed-pages channel; a watcher keeps the folder flowing |
+Marks arrive through three channels and are merged into one corpus: **e-reader highlights**
+(`My Clippings.txt`, an *Export Notes* HTML file, or a Readwise CSV), **photographed pages** read by
+local OCR — pen marks, brackets, marginalia, anything never read on a screen — and **an Apple Notes
+folder**, which carries typed text, photos and Apple Pencil handwriting through Apple's own
+recognisers. Formats, flags and the crawler for providers with no export are in
+[02-KINDLE](docs/02-KINDLE.md) and [03-PHOTOS-AND-NOTES](docs/03-PHOTOS-AND-NOTES.md).
 
 Neither channel is a superset of the other, and that has caused more trouble here than anything
 else. A pass built on photographs alone concluded a reader "never engaged" with a chapter
@@ -247,13 +243,9 @@ they had in fact marked twenty-two times in the other channel. See
 [docs/reference/PITFALLS.md](docs/reference/PITFALLS.md); that failure has four siblings.
 
 The merged corpus becomes **one markdown node per book** with uniform frontmatter — an
-[Obsidian](https://obsidian.md) vault if you use one, a folder if you don't — so the whole
-library is one directory any agent can grep. Each book is **distilled** to the ~20% that
-carries it (Thomas Dev Brown's method), with your own marks mapped onto it and a check of which
-marked ideas ever left a receipt in your own writing. From there the loop closes: **Praxis**,
-an index of the ideas you actually used; the **Tutor**, one cited lesson at a time to a channel
-you already open; the **Librarian**, which looks for relationships and is built to refuse
-most of what it finds.
+[Obsidian](https://obsidian.md) vault if you use one, a folder if you don't — so the whole library
+is one directory any agent can grep. Each book is **distilled** to the ~20% that carries it
+(Thomas Dev Brown's method), with your own marks mapped onto it.
 
 ## Two things this got wrong, and what they cost
 
@@ -279,25 +271,14 @@ no receipt anywhere else.
 
 ## What actually works today, and what is only designed
 
-Labels are defined here and referenced everywhere else. **Shipped** — in this repository
-today; the quickstart or a test exercises it. **Designed** — specified, with the evidence for the design; not built.
+Of 11 capabilities, **9 are shipped** — in this repository today, exercised by the quickstart or a
+test — and **2 are designed**: specified, with the evidence for the design, and not built. The full
+table, row by row with its path, is in [reference/STATUS](docs/reference/STATUS.md).
 
-| capability | status | where |
-|---|---|---|
-| Kindle: `My Clippings.txt`, Export Notes HTML, Readwise CSV → one record | Shipped | `capture/kindle/`, [02-KINDLE](docs/02-KINDLE.md) |
-| Plausibility report (the sorted count vector, every run) | Shipped | `capture/kindle/plausibility.py` |
-| Photographed pages: folder-per-book manifest, OCR seam (Apple Vision / stub), catalogue prompt | Shipped (OCR: macOS) | `capture/pages/`, [03-PHOTOS-AND-NOTES](docs/03-PHOTOS-AND-NOTES.md) |
-| Corpus: membership in one place, two channels merged, the sampling-bias warning in every file | Shipped | `corpus/` |
-| Vault: one node per book, nine enforced rules, each tested | Shipped | `vault/build_nodes.py`, [04-VAULT](docs/04-VAULT.md) |
-| Distill: skill, headless runner, frozen-manifest workflow, three ground rules | Shipped | `skills/distill/`, `agents/distill/`, [05-DISTILL](docs/05-DISTILL.md) |
-| Fixture: public-domain book, every input format, provenance enforced by test | Shipped | `fixtures/meditations/` |
-| Apple Notes folder → pipeline: typed text, photos with Apple's own OCR, Pencil handwriting via the recogniser, four note kinds, and a watcher that exports only what changed | Shipped (macOS) | `capture/notes/`, [03-PHOTOS-AND-NOTES](docs/03-PHOTOS-AND-NOTES.md) |
-| Praxis: the applied index — a proposer, then a skeptic that refuses by default | Shipped | `agents/praxis/`, [06-PRAXIS](docs/06-PRAXIS.md) |
-| Tutor: one cited lesson per run — compose-only, a floor checked in code, three channels, a ledger, and a loud kill switch | Shipped | `agents/tutor/`, [07-TUTOR](docs/07-TUTOR.md) |
-| Reference crawler for a notebook web view, with the silent-zero regression tests | Designed (v0.3) | arrives as `capture/kindle/notebook_crawl.py`; technique in [02-KINDLE](docs/02-KINDLE.md) |
-| Librarian: the corroboration matcher — which marked ideas left a receipt, and which never did | Shipped | `agents/librarian/candidates.py`, [its README](agents/librarian/README.md) |
-| Librarian: judge and refute-by-default for the cross-book case | Designed, deliberately unbuilt | the premise is refuted 27–1; [08-LIBRARIAN](docs/08-LIBRARIAN.md) |
-| Cross-book knowledge graph | Refuted 27–1 — not on the roadmap | [docs/reference/DECISIONS.md](docs/reference/DECISIONS.md) |
+One of the designed entries is there on purpose. The cross-book Librarian — the judge that would
+decide whether two books are really saying the same thing — is **deliberately unbuilt**: the premise
+came out refuted 27 to 1 when it was tested, and [08-LIBRARIAN](docs/08-LIBRARIAN.md) carries the
+score against it rather than quietly dropping the idea.
 
 ## The first hour, and the first week
 
