@@ -271,8 +271,9 @@ no receipt anywhere else.
 
 ## What actually works today, and what is only designed
 
-Of 11 capabilities, **9 are shipped** — in this repository today, exercised by the quickstart or a
-test — and **2 are designed**: specified, with the evidence for the design, and not built. The full
+Two labels, defined once and used everywhere: **Shipped** — in this repository today, exercised
+by the quickstart or a test. **Designed** — specified, with the evidence for the design, and not
+built. Of 11 capabilities, 9 are shipped and 2 are designed. The full
 table, row by row with its path, is in [reference/STATUS](docs/reference/STATUS.md).
 
 One of the designed entries is there on purpose. The cross-book Librarian — the judge that would

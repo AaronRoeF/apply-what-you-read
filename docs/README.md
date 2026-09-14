@@ -49,3 +49,4 @@ Defined in the README's status table, and referenced everywhere else:
 | **Shipped** | in this repository today; the quickstart or a test exercises it |
 | **Proven, landing** | running in the author's instance; the public port is in flight and flips to Shipped in the release it lands |
 | **Designed** | specified, with the evidence for the design; not built |
+| [reference/STATUS](reference/STATUS.md) | you want the capability table row by row, with the path for each |
