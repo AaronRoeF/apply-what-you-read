@@ -35,7 +35,7 @@ What survives the caveats is still stark. The most-marked book in that library c
 passages and not one of them turns up anywhere. The library is a serious one, marked carefully over
 years, by someone who reads more than most people you know.
 
-## What this does about it
+## Tomorrow morning, one marked passage comes back to you
 
 Tomorrow morning, one passage you marked arrives — with what its author was actually arguing,
 one concrete thing to do about it this week, and a citation you can open in ten seconds to check
@@ -106,7 +106,9 @@ for you and why. `AGENTS.md` is written for the agent rather than for
 you: the order of operations, the decisions already settled with their evidence, and the mistakes
 that would otherwise cost you a session. Read the plan before you let it start.
 
-## How it works
+## How it works — and why every stage shows its source
+
+![Three channels of marks — e-reader highlights, photographed pages read by local OCR, and a notes folder — merge into one plain-markdown corpus per book, which builds one vault node per book. Three readers use it: Praxis lists what you marked and never used, Tutor sends one cited lesson a day, and Librarian (designed, not built) checks whether a marked idea ever left a receipt. Everything happens on your own machine.](assets/pipeline.svg)
 
 Your marks come out of the places they already live, get joined into one corpus of plain markdown,
 and every later stage reads that corpus and cites what it used. No stage infers what you meant.
@@ -159,7 +161,7 @@ They are 1% because typing on an e-reader is annoying. The replacement signal is
 interpretive. Hand-adjudicated across twenty-eight books, it returned 4 corroborated, 11 partial, and 13 with
 no receipt anywhere else.
 
-## Status
+## What actually works today, and what is only designed
 
 Labels are defined here and referenced everywhere else. **Shipped** — in this repository
 today; the quickstart or a test exercises it. **Designed** — specified, with the evidence for the design; not built.
@@ -223,7 +225,7 @@ Anything that arrives on a schedule eventually becomes wallpaper, and a system t
 into silence has stopped being a tutor and become a notification. [07-TUTOR](docs/07-TUTOR.md) has the rest, including what
 the design does *not* guarantee.
 
-## Requirements
+## What you need before you start, stated plainly
 
 - Python 3.11+ somewhere on the machine. `quickstart.sh` finds the newest 3.11+ interpreter on
   your PATH and builds `.venv/` with it — you do not make the venv yourself. macOS ships 3.9,
@@ -236,7 +238,7 @@ the design does *not* guarantee.
 - No API key is required for any shipped path. Distill and the agents use your Claude Code
   login; what they send to Anthropic's API is listed in [05-DISTILL](docs/05-DISTILL.md).
 
-## Boundaries
+## What it will never do with your library
 
 - **The repository ships code, not corpus.** `out/` is git-ignored by directory. No book text,
   no highlight text, and no personal annotation ever enters version control — the only book
@@ -255,7 +257,7 @@ of contents). Not flashcards or spaced repetition. Not a cross-book knowledge gr
 Not a hosted service; no accounts, no telemetry. Not a tool for other people's books. Not a
 company product — this is one person's reading system, published so it can be fixed for others.
 
-## Docs
+## Where to go next, depending on what you want
 
 | doc | read it if |
 |---|---|
