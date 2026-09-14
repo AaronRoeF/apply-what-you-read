@@ -1,9 +1,13 @@
 # apply-what-you-read
 
-You highlight books. This turns those highlights into one short lesson a day: a passage you
-marked, what its author was actually arguing, one concrete thing to do about it this week, and a
-citation you can open in ten seconds to check it. It runs on your own machine against your own
-library, and it also tells you which of your books you highlighted and then never used again.
+You mark things worth keeping and then never see them again. This turns those marks into one
+short lesson a day: a passage you marked, what its author was actually arguing, one concrete thing
+to do about it this week, and a citation you can open in ten seconds to check it. It runs on your
+own machine against your own material, and it also tells you what you marked and then never used.
+
+Books are where this started, not where it stops. Anything with a source worth citing works the
+same way — highlights, quotes, marginalia in a paper book, a talk you took notes on. The pipeline
+does not care what the thing was; it cares that you can point at where the words came from.
 
 That is the whole of it. The rest of this page is why it is worth having.
 
@@ -35,6 +39,45 @@ What survives the caveats is still stark. The most-marked book in that library c
 passages and not one of them turns up anywhere. The library is a serious one, marked carefully over
 years, by someone who reads more than most people you know.
 
+**That table is not research somebody did about reading. It is output.** The matcher that
+produced it ships in this repository — `agents/librarian/candidates.py` — and it runs against
+your library, not that one. Point it at your own highlights and your own writing and it will
+hand you your own number, with the same caveats attached and the same honesty about what exact
+phrase matching cannot see.
+
+Most people guess they are not applying what they read. Almost nobody has a figure. You can have
+one before lunch, and it is the most useful uncomfortable thing in here.
+
+## What this is, honestly, before you read further
+
+This is not a packaged product and it is not trying to become one. It is a working project, built
+for one reader's shelf, published because several of its parts are worth borrowing — or stealing
+outright — whether or not you ever run the whole thing.
+
+The parts I would steal, if I were you:
+
+**A skeptic that refuses by default.** Praxis is a proposer and then a critic whose job is to say
+no. Every tool in this category generates confident, plausible output; almost none of them ship
+something whose success condition is rejection. See [06-PRAXIS](docs/06-PRAXIS.md).
+
+**A citation contract that actually resolves.** Every lesson points at the exact span it came from,
+so you can call its bluff in ten seconds. A resolving pointer is not the same as a supported claim,
+and the difference is enforced in code rather than promised in a prompt.
+
+**A feature documented because it was refused.** The cross-book Librarian is specified, argued, and
+deliberately unbuilt — the premise came out refuted 27 to 1, and
+[08-LIBRARIAN](docs/08-LIBRARIAN.md) carries the score against it. The tightening that did not work
+is written up too.
+
+**Local OCR of things that were never digital.** Pen marks, brackets, marginalia, a filled-in
+worksheet, a book you only ever read on paper — Apple Vision on your own machine, no network, no
+API key.
+
+**What I actually want back is feedback.** Not stars, not adoption. Whether the skeptic refuses the
+right things, whether the citation floor holds on a library that is not mine, whether the Librarian
+number means anything on someone else's shelf. Open an issue and tell me where it is wrong — that
+is the contribution this needs most.
+
 ## Tomorrow morning, one marked passage comes back to you
 
 Tomorrow morning, one passage you marked arrives — with what its author was actually arguing,
@@ -63,6 +106,80 @@ On the reference library the top of that list held four books with over 300 mark
 verbatim reuse anywhere at all. Read it as a list of places to look, not a verdict — the instrument is
 literal, and you will find at least one book on it whose ideas you use every week without ever
 quoting them.
+
+## Three worked examples, so you can see the shape
+
+Every name, calendar entry and situation below is invented. The books are real and the citations
+resolve; the lives they land in do not exist. That is also how the repository's own fixture works —
+a public-domain book, so the whole pipeline can be watched end to end without anyone's library.
+
+**One. The calendar says what tomorrow is. Your marks say what to bring to it.**
+
+Tomorrow, 09:00 — *Quarterly review with Priya Shah*. Recurring, eleven months running.
+
+```
+APPLY WHAT YOU READ LESSON
+
+HELD: "it is in thy power to retire into thyself, and to be at rest" — Meditations, loc 269, 🩷.
+Marcus is arguing that the retreat people look for in the countryside is available at any moment,
+and that going looking for it elsewhere is itself the avoidance.
+
+WHY HELD: Marked two years ago, never spent since.
+
+APPLY: Suppose you take ten minutes before the quarterly review tomorrow, door shut, no inbox —
+and decide what you actually want out of it before anyone else fills the hour for you.
+
+(citation: Meditations loc 269 🩷)
+```
+
+The lesson did not know about the meeting. The *timing* did. One idea you already decided was
+worth keeping, handed back on the morning it is usable.
+
+**Two. Conventional wisdom is cheap. A passage you marked yourself is not.**
+
+Next week, 14:00 — *Acme Robotics — first call with their new VP of Engineering*.
+
+Everyone knows "listen before you change things." It is advice, it is free, and it changes nothing.
+What is different is a passage **you** marked, in your own copy, at a moment when you thought it
+mattered — Michael Watkins on the first ninety days, on negotiating expectations early rather than
+inheriting someone else's. You highlighted it. You have not looked at it since.
+
+```
+APPLY WHAT YOU READ LESSON
+
+HELD: The First 90 Days, loc 531 🟡 — on establishing what success looks like with your
+counterpart before the work starts, rather than discovering the mismatch at the review.
+
+WHY HELD: Marked when you were the one being onboarded. Never applied from the other side.
+
+APPLY: Suppose you spend the first ten minutes of the Acme call asking what a good first
+quarter looks like to them, and write the answer down where you will both see it again.
+
+(citation: The First 90 Days loc 531 🟡)
+```
+
+**Three. The most important output is the one where it refuses.**
+
+Thursday, 11:00 — *Board prep*.
+
+An obvious move here is to reach for a marked passage about decision-making under uncertainty and
+staple it to the meeting. Praxis will not do it. The proposer offers the match; the skeptic asks
+what it would actually change about Thursday, and a passage that produces no different action gets
+**rejected**, with the reason recorded:
+
+```
+PRAXIS — proposal rejected
+
+CANDIDATE: Thinking, Fast and Slow, loc 1,204 — on base rates.
+PROPOSED FOR: Thursday board prep.
+SKEPTIC: Refused. The passage is about estimating an unknown probability. Nothing in the
+proposal names a number that would change, or a decision that would go the other way.
+Generic relevance is not application.
+```
+
+A tool that connects any book to any meeting is a horoscope. **The refusal is the feature** — it
+is what makes the lessons that do arrive worth reading, and it is the part most worth stealing
+whatever else you take from here.
 
 ## What it costs to try
 
@@ -254,8 +371,9 @@ the design does *not* guarantee.
 
 Not a summarizer (distill is the 20%, tagged with how much of the book it saw — not the table
 of contents). Not flashcards or spaced repetition. Not a cross-book knowledge graph (see above).
-Not a hosted service; no accounts, no telemetry. Not a tool for other people's books. Not a
-company product — this is one person's reading system, published so it can be fixed for others.
+Not a hosted service; no accounts, no telemetry. Not a tool for other people's libraries. Not a company product, and not on its way to
+becoming one — this is one person's system, published so its parts can be taken and its mistakes
+can be pointed at.
 
 ## Where to go next, depending on what you want
 
