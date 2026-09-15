@@ -1,15 +1,18 @@
 # apply-what-you-read
 
-You mark things worth keeping and then never see them again. This turns those marks into one
-short lesson a day: a passage you marked, what its author was actually arguing, one concrete thing
-to do about it this week, and a citation you can open in ten seconds to check it. It runs on your
-own machine against your own material, and it also tells you what you marked and then never used.
+**Continuous learning from the reading you've already done.**
 
-Books are where this started, not where it stops. Anything with a source worth citing works the
-same way — highlights, quotes, marginalia in a paper book, a talk you took notes on. The pipeline
-does not care what the thing was; it cares that you can point at where the words came from.
+Right now your learning stops when the book closes. You highlighted the parts worth keeping, and
+then you never looked at them again. This restarts it. One passage you marked comes back each day,
+with what its author was arguing, one thing to do about it this week, and a source you can check in
+ten seconds. It runs on your own machine, against your own material, and it also tells you what you
+marked and never used.
 
-That is the whole of it. The rest of this page is why it is worth having.
+Books are where this started, not where it stops. Highlights, quotes, marginalia in a paper book,
+notes from a talk — anything with a source worth citing works the same way. The pipeline doesn't
+care what the thing was. It cares that you can point at where the words came from.
+
+That's the whole of it. The rest of this page is why it's worth having.
 
 **Name three ideas from the books you read last year that changed how you work.**
 
