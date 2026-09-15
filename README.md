@@ -81,14 +81,13 @@ someone else's shelf. Open an issue and tell me where it's wrong.
 
 ## Three worked examples, so you can see the shape
 
-The books are off my shelf. The lives aren't. Every name, meeting and situation below is made up,
-and the locations are illustrative rather than transcribed — the running system emits the verbatim
-span with its real location and colour, and you can watch it do that against the public-domain book
-that ships here.
+The books are off my shelf. The lives aren't. Every name, meeting and situation below is made up.
+The locations are illustrative too. The running system emits the verbatim span with its real
+location and colour, and you can watch it do that against the public-domain book that ships here.
 
-**One — the feedback you were about to give, inverted.**
+**One. The feedback you were about to give, inverted.**
 
-Tomorrow, 10:30 — *1:1 with Jordan Rivera*. You have been putting off a hard conversation for three
+Tomorrow, 10:30, a 1:1 with Jordan Rivera. You've been putting off a hard conversation for three
 weeks.
 
 ```
@@ -106,13 +105,13 @@ job harder — and then say nothing at all until they actually answer.
 (citation: Radical Candor, 🟡)
 ```
 
-The lesson didn't know the conversation was hard. It knew you'd marked that passage and never
-spent it, and that a 1:1 was the next place it could land.
+The lesson didn't know the conversation was hard. It knew you'd marked that passage, never spent
+it, and that a 1:1 was the next place it could land.
 
-**Two — the deal that looks fine because only one person is in the room.**
+**Two. The deal that looks fine because only one person is ever in the room.**
 
-Thursday, 15:00 — *Acme Robotics — renewal forecast call*. Eleven months of meetings, always the
-same one attendee.
+Thursday, 15:00, the Acme Robotics renewal forecast call. Eleven months of meetings, always the
+same single attendee.
 
 ```
 APPLY WHAT YOU READ LESSON
@@ -129,9 +128,9 @@ APPLY: Suppose that before Thursday you write down who signs at Acme, and if the
 (citation: The Qualified Sales Leader, 🟡)
 ```
 
-**Three — the most important output is the one where it refuses.**
+**Three. The most important output is the one where it refuses.**
 
-Friday, 11:00 — *Board prep*.
+Friday, 11:00, board prep.
 
 The obvious move is to grab something marked about decision-making and staple it to the meeting.
 Praxis won't. The proposer offers the match, the skeptic asks what it would change about Friday,
@@ -197,8 +196,9 @@ that would otherwise cost you a session. Read the plan before you let it start.
 
 ![Three channels of marks — e-reader highlights, photographed pages read by local OCR, and a notes folder — merge into one plain-markdown corpus per book, which builds one vault node per book. Three readers use it: Praxis lists what you marked and never used, Tutor sends one cited lesson a day, and Librarian (designed, not built) checks whether a marked idea ever left a receipt. Everything happens on your own machine.](assets/pipeline.svg)
 
-Your marks come out of the places they already live, get joined into one corpus of plain markdown,
-and every later stage reads that corpus and cites what it used. No stage infers what you meant.
+Your marks come out of wherever they already live and get joined into one corpus of plain
+markdown. Every stage after that reads the corpus and cites what it used. No stage guesses at what
+you meant.
 
 ```
 capture  →  normalize  →  merge  →  vault  →  distill  →  Praxis  →  Tutor  →  Librarian
@@ -257,13 +257,12 @@ score against it rather than quietly dropping the idea.
 
 ## The first hour, and the first week
 
-In an hour: your own library, parsed. Every book you have marked becomes one markdown file with
-its highlights, its colours and its photographed pages counted side by side, and you can finally
-see the shape of what you have been collecting. Most people are surprised twice — by how much is
-there, and by which books turn out to be empty.
+In an hour you'll have your library parsed. Every book you've marked becomes one markdown file
+with its highlights and its photographed pages counted together. Two things usually surprise
+people. How much is in there. And which books turn out to be empty.
 
-In a week: the books that matter distilled to the fifth that carries them, your own marks mapped
-onto that, and a lesson a day. By the end of it the ledger has outcomes in it and you know which
+In a week you'll have the books that matter distilled to the fifth that carries them, your marks
+mapped onto that, and a lesson arriving daily. By then the ledger has outcomes in it and you know which
 lessons landed.
 
 The node the quickstart produces (abridged — eight of its sixteen keys):
@@ -312,13 +311,12 @@ the design does *not* guarantee.
 
 ## What it will never do with your library
 
-- **The repository ships code, not corpus.** `out/` is git-ignored by directory. No book text,
-  no highlight text, and no personal annotation ever enters version control — the only book
-  text here is a public-domain excerpt with its provenance stated on the file and enforced by
-  a test.
+- **The repository ships code, not corpus.** `out/` is git-ignored by directory, so no book text
+  and no annotation of yours can reach version control. The only book text here is a
+  public-domain excerpt, and a test enforces that.
 - **Extraction runs only against files you already have, or a session you authenticated
   yourself.** The tooling never handles credentials.
-- **Only your own annotations are retrieved** — the selections you made and the notes you typed.
+- **Only your own annotations are retrieved.** What you selected, and what you typed.
 - **Redistribution is out of scope.** The corpus is single-user and local.
 - **Terms of service vary by provider** and are your responsibility to check.
 
