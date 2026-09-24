@@ -2,7 +2,7 @@
 
 The file every Kindle writes as you read: one record per highlight, note or bookmark, separated
 by a line of ten `=`. It is the most universal on-ramp (no account, no app) and the lossiest:
-it carries NO colour, its records accumulate (re-selecting a longer span leaves the shorter one
+it carries NO color, its records accumulate (re-selecting a longer span leaves the shorter one
 behind), and exact duplicates appear whenever the device re-syncs. This parser:
 
   * strips the UTF-8 BOM and accepts CRLF or LF

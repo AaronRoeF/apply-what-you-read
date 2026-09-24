@@ -5,6 +5,10 @@ every public file is traceable to one place.
 
 ---
 
+## [2026-09-24] — v0.2.1 — The pipeline diagram uses the standard palette; one comment uses American spelling
+- Source commit: 0c3c300
+
+
 ## [2026-09-08] — v0.2.0 — loop — Praxis, the Tutor (one cited lesson at a time, composed by the model and validated in code), the corroboration matcher and its unapplied signal, an Apple Notes on-ramp, docs 06-08, a known-gaps page and a corpus page written from adversarial review, and an agent brief tested by pointing a real agent at the repository
 - Source commit: e190d6d
 
