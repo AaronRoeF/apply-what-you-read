@@ -73,7 +73,10 @@ TIMEOUT="${TUTOR_TIMEOUT_SECS:-900}"
 case "$TIMEOUT" in ''|*[!0-9]*) echo "tutor: TUTOR_TIMEOUT_SECS must be digits" >&2; exit 2 ;; esac
 mkdir -p "$RG_OUT" "$OUTDIR"
 if [ -d "$LOCK" ]; then
-  AGE=$(( $(date +%s) - $(stat -f %m "$LOCK" 2>/dev/null || stat -c %Y "$LOCK" 2>/dev/null || echo 0) ))
+  # GNU form first: GNU reads `stat -f %m` as --file-system on a file named "%m", prints the lock's
+  # file-system dump AND fails, so the fallback's number lands after that dump inside $(( )).
+  # BSD rejects -c with nothing on stdout, so the order costs macOS nothing.
+  AGE=$(( $(date +%s) - $(stat -c %Y "$LOCK" 2>/dev/null || stat -f %m "$LOCK" 2>/dev/null || echo 0) ))
   if [ "$AGE" -gt $(( TIMEOUT + 300 )) ]; then rm -rf "$LOCK"; else
     echo "tutor: another run holds the lock (${AGE}s old) — nothing to do"; exit 0
   fi

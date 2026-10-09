@@ -5,6 +5,10 @@ every public file is traceable to one place.
 
 ---
 
+## [2026-10-09] — v0.2.2 — The Tutor's lock check works on Linux (GNU stat) as well as macOS
+- Source commit: 686bfa0
+
+
 ## [2026-09-24] — v0.2.1 — The pipeline diagram uses the standard palette; one comment uses American spelling
 - Source commit: 0c3c300
 
